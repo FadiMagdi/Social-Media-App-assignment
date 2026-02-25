@@ -3,23 +3,35 @@ package org.socialmediaapp.social_media_app.domain;
 import java.util.Date;
 
 public class Notification {
-    private User sourceUser;
+    private Integer sourceUserID;
     private String topic;
     private Date notificationDate;
     private String notificationText;
     private Integer notificationID;
-    public Notification(User sourceUser, String topic, Date notificationDate, String notificationText) {
-        this.sourceUser = sourceUser;
+    private Integer postID;
+
+    public Notification(Integer sourceUserID, String topic, Date notificationDate, String notificationText, Integer postID) {
+        this.sourceUserID = sourceUserID;
         this.topic = topic;
         this.notificationDate = notificationDate;
         this.notificationText = notificationText;
+        this.postID = postID;
     }
 
-    public Notification(User sourceUser, String topic, Date notificationDate, String notificationText, Integer notificationID) {
-        this.sourceUser = sourceUser;
+    public Notification(Integer sourceUserID, String topic, Date notificationDate, String notificationText, Integer notificationID, Integer postID) {
+        this.sourceUserID = sourceUserID;
         this.topic = topic;
         this.notificationDate = notificationDate;
         this.notificationText = notificationText;
+        this.notificationID = notificationID;
+        this.postID = postID;
+    }
+
+    public Integer getNotificationID() {
+        return notificationID;
+    }
+
+    public void setNotificationID(Integer notificationID) {
         this.notificationID = notificationID;
     }
 
@@ -47,11 +59,11 @@ public class Notification {
         this.topic = topic;
     }
 
-    public User getSourceUser() {
-        return sourceUser;
+    public Integer getSourceUserID() {
+        return sourceUserID;
     }
 
-    public void setSourceUser(User sourceUser) {
-        this.sourceUser = sourceUser;
+    public void setSourceUserID(Integer sourceUserID) {
+        this.sourceUserID = sourceUserID;
     }
 }
