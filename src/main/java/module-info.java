@@ -7,6 +7,7 @@ module org.socialmediaapp.social_media_app {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires java.sql;
 
     opens org.socialmediaapp.social_media_app to javafx.fxml;
     exports org.socialmediaapp.social_media_app;
