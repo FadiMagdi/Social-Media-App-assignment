@@ -1,5 +1,6 @@
 package org.socialmediaapp.social_media_app.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,65 @@ public class Post {
         this.postMaker = postMaker;
         this.postDate = postDate;
         this.image_path = image_path;
+        postLikes = new ArrayList<Like>();
+        postComments = new ArrayList<Comment>();
+    }
+
+    public Post(User postMaker, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments) {
+        this.postMaker = postMaker;
+        this.postDate = postDate;
+        this.image_path = image_path;
+        this.postID = postID;
+        this.postLikes = postLikes;
+        this.postComments = postComments;
+    }
+
+    public User getPostMaker() {
+        return postMaker;
+    }
+
+    public void setPostMaker(User postMaker) {
+        this.postMaker = postMaker;
+    }
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
+    public Integer getPostID() {
+        return postID;
+    }
+
+    public void setPostID(Integer postID) {
+        this.postID = postID;
+    }
+
+    public List<Like> getPostLikes() {
+        return postLikes;
+    }
+
+    public void setPostLikes(List<Like> postLikes) {
+        this.postLikes = postLikes;
+    }
+
+    public List<Comment> getPostComments() {
+        return postComments;
+    }
+
+    public void setPostComments(List<Comment> postComments) {
+        this.postComments = postComments;
     }
 
     public void addLike(User liking){
