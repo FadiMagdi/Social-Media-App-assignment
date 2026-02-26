@@ -2,9 +2,9 @@ package org.socialmediaapp.social_media_app.domain;
 
 public class Like {
 
-    public User userMadeLike;
+    public userDTO userMadeLike;
 
-    public Like(User userMadeLike) {
+    public Like(userDTO userMadeLike) {
         this.userMadeLike = userMadeLike;
     }
 }

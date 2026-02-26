@@ -77,16 +77,17 @@ public class Post {
         this.postComments = postComments;
     }
 
-    public void addLike(User liking){
+    public void addLike(Integer userID,String userName,Profile userProfile){
+        userDTO liking = new userDTO(userID,userName,userProfile);
         this.postLikes.add(new Like(liking));
     }
 
-    public void removeLike(User removing) {
+    public void removeLike(Integer userID) {
 
 
         Like target = null;
         for (int i = 0; i < postLikes.size(); i++) {
-            if (postLikes.get(i).userMadeLike.equals(removing)) {
+            if (postLikes.get(i).userMadeLike.userID().equals(userID)) {
                 target = postLikes.get(i);
                 break;
             }
