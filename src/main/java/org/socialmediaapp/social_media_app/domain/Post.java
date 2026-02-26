@@ -6,13 +6,13 @@ import java.util.List;
 
 public class Post {
 
-    public User postMaker;
+    public userDTO postMaker;
     public Date postDate;
     public String image_path;
     private Integer postID;
     public List<Like> postLikes;
     public List<Comment> postComments;
-    public Post(User postMaker, Date postDate, String image_path) {
+    public Post(userDTO postMaker, Date postDate, String image_path) {
         this.postMaker = postMaker;
         this.postDate = postDate;
         this.image_path = image_path;
@@ -20,7 +20,7 @@ public class Post {
         postComments = new ArrayList<Comment>();
     }
 
-    public Post(User postMaker, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments) {
+    public Post(userDTO postMaker, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments) {
         this.postMaker = postMaker;
         this.postDate = postDate;
         this.image_path = image_path;
@@ -29,11 +29,11 @@ public class Post {
         this.postComments = postComments;
     }
 
-    public User getPostMaker() {
+    public userDTO getPostMaker() {
         return postMaker;
     }
 
-    public void setPostMaker(User postMaker) {
+    public void setPostMaker(userDTO postMaker) {
         this.postMaker = postMaker;
     }
 
