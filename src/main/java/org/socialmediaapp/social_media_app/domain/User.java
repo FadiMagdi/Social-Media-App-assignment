@@ -10,7 +10,7 @@ public class User {
     private String userName;
     private int age;
     public Profile userProfile;
-    private List<User> friends;
+    private List<userDTO> friends;
     private List<friendRequest> friendRequests;
     private List<Post> postsMade;
     private List<Post> postsReceived;
@@ -25,26 +25,21 @@ public class User {
         postsReceived = new ArrayList<Post>();
         notificationsReceived = new ArrayList<Notification>();
         friendRequests = new ArrayList<friendRequest>();
-        friends = new ArrayList<User>();
+        friends = new ArrayList<userDTO>();
     }
 
-    public User( Integer userID ,String email, String password, String userName, int age, Profile userProfile) {
-        this.userID = userID;
+
+    public User( Integer userID,String email, String password, String userName, int age) {
+       this.userID = userID;
         this.email = email;
         this.password = password;
         this.userName = userName;
         this.age = age;
-        this.userProfile = userProfile;
-        postsMade = new ArrayList<Post>();
-        postsReceived = new ArrayList<Post>();
-        notificationsReceived = new ArrayList<Notification>();
-        friendRequests = new ArrayList<friendRequest>();
-        friends = new ArrayList<User>();
+
     }
 
 
-
-    public User(Integer userID, String email, String password, String userName, int age, Profile userProfile, List<User> friends, List<friendRequest> friendRequests, List<Post> postsMade, List<Post> postsReceived, List<Notification> notificationsReceived) {
+    public User(Integer userID, String email, String password, String userName, int age, Profile userProfile, List<userDTO> friends, List<friendRequest> friendRequests, List<Post> postsMade, List<Post> postsReceived, List<Notification> notificationsReceived) {
         this.userID = userID;
         this.email = email;
         this.password = password;
@@ -106,11 +101,11 @@ public class User {
         this.userProfile = userProfile;
     }
 
-    public List<User> getFriends() {
+    public List<userDTO> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<User> friends) {
+    public void setFriends(List<userDTO> friends) {
         this.friends = friends;
     }
 
@@ -146,12 +141,26 @@ public class User {
         this.notificationsReceived = notificationsReceived;
     }
 
-    public void addFriend(User newFriend){
+    public void addFriend(userDTO newFriend){
         this.friends.add(newFriend);
     }
 
-    public void removeFriend(User removedFriend){
-        this.friends.remove(removedFriend);
+    public void removeFriend(Integer userID){
+
+        userDTO remFriend = null;
+
+        for(int i=0;i<this.friends.size();i++){
+            userDTO currentFriend = this.friends.get(i);
+            if(currentFriend.userID().equals(userID)){
+                remFriend = currentFriend;
+                break;
+            }
+        }
+        if(remFriend != null) {
+            this.friends.remove(remFriend);
+        }else{
+            System.out.println("Freind does not exist");
+        }
     }
 
     public void MakePost(Post newPost){

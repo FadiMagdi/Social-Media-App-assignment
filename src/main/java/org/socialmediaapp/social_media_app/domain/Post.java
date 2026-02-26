@@ -8,25 +8,48 @@ public class Post {
 
     public userDTO postMaker;
     public Date postDate;
-    public String image_path;
+    public String postText;
+    private String image_path;
     private Integer postID;
+    private String privacy;
     public List<Like> postLikes;
     public List<Comment> postComments;
-    public Post(userDTO postMaker, Date postDate, String image_path) {
+    public Post(userDTO postMaker, Date postDate, String image_path,String postText,String privacy) {
         this.postMaker = postMaker;
         this.postDate = postDate;
         this.image_path = image_path;
+        this.postText = postText;
+        this.privacy = privacy;
         postLikes = new ArrayList<Like>();
         postComments = new ArrayList<Comment>();
     }
 
-    public Post(userDTO postMaker, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments) {
+    public Post(userDTO postMaker, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments,String postText,String privacy) {
         this.postMaker = postMaker;
         this.postDate = postDate;
         this.image_path = image_path;
+        this.postText = postText;
         this.postID = postID;
+        this.privacy = privacy;
         this.postLikes = postLikes;
         this.postComments = postComments;
+
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
+    public String getPostText() {
+        return postText;
+    }
+
+    public void setPostText(String postText) {
+        this.postText = postText;
     }
 
     public userDTO getPostMaker() {

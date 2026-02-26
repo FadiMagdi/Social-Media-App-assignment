@@ -26,7 +26,7 @@ public class NotificationDao {
                 ResultSet rs = stmt.executeQuery(sql);
         ){
             while(rs.next()){
-                Notification explored = new Notification(rs.getInt("sender_id"),rs.getString("notification_type"),rs.getDate("notification_date"),rs.getString("notfication_text"),rs.getInt("post_id"));
+                Notification explored = new Notification(rs.getInt("sender_id"),rs.getString("notification_type"), (java.util.Date) rs.getDate("notification_date"),rs.getString("notfication_text"),rs.getInt("post_id"));
 
                 NotificationList.add(explored);
             }
