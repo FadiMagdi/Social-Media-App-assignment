@@ -3,22 +3,42 @@ package org.socialmediaapp.social_media_app.domain;
 import java.util.Date;
 
 public class Comment {
-    public userDTO userMadeComment;
+    private Integer userID ;
+    public String userName;
     public String commentText;
     public Date commentDate;
     private Integer commentID;
 
-    public Comment(userDTO userMadeComment, String commentText, Date commentDate) {
-        this.userMadeComment = userMadeComment;
-        this.commentText = commentText;
-        this.commentDate = commentDate;
-    }
-
-    public Comment(userDTO userMadeComment, String commentText, Date commentDate, Integer commentID) {
-        this.userMadeComment = userMadeComment;
+    public Comment(Integer userID, String userName, String commentText, Date commentDate, Integer commentID) {
+        this.userID = userID;
+        this.userName = userName;
         this.commentText = commentText;
         this.commentDate = commentDate;
         this.commentID = commentID;
+    }
+
+
+    public Comment(String userName, String commentText, Date commentDate, Integer commentID) {
+        this.userName = userName;
+        this.commentText = commentText;
+        this.commentDate = commentDate;
+        this.commentID = commentID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
     public Integer getCommentID() {
@@ -29,13 +49,9 @@ public class Comment {
         this.commentID = commentID;
     }
 
-    public userDTO getUserMadeComment() {
-        return userMadeComment;
-    }
 
-    public void setUserMadeComment(userDTO userMadeComment) {
-        this.userMadeComment = userMadeComment;
-    }
+
+
 
     public String getCommentText() {
         return commentText;

@@ -195,7 +195,28 @@ boolean success = false;
      return targetUser;
  }
 
+    public List<userDTO> getUserFriends(Integer userID) {
+        String sql = "select apu.id,apu.name\n" +
+                "from app_user apu\n" +
+                "join friends fds on fds.user2_id = apu.id\n" +
+                "where fds.user1_id = " + String.valueOf(userID);
+        List<userDTO> friendsList = new ArrayList<userDTO>();
+        try (
+                Statement stmt = this.DBConnection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+        ) {
+            while (rs.next()) {
+                userDTO friend = this.getUserDTOByID(rs.getInt("id"));
+                friendsList.add(friend);
 
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return friendsList;
+    }
 
 
 

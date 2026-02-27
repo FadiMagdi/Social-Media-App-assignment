@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Post {
 
-    public userDTO postMaker;
+    public Integer postMakerID;
+    public String postMakerName;
     public Date postDate;
     public String postText;
     private String image_path;
@@ -14,8 +15,9 @@ public class Post {
     private String privacy;
     public List<Like> postLikes;
     public List<Comment> postComments;
-    public Post(userDTO postMaker, Date postDate, String image_path,String postText,String privacy) {
-        this.postMaker = postMaker;
+    public Post(Integer postMakerID , String postMakerName, Date postDate, String image_path,String postText,String privacy) {
+        this.postMakerID = postMakerID;
+        this.postMakerName = postMakerName;
         this.postDate = postDate;
         this.image_path = image_path;
         this.postText = postText;
@@ -24,8 +26,9 @@ public class Post {
         postComments = new ArrayList<Comment>();
     }
 
-    public Post(userDTO postMaker, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments,String postText,String privacy) {
-        this.postMaker = postMaker;
+    public Post(Integer postMakerID , String postMakerName, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments,String postText,String privacy) {
+        this.postMakerID = postMakerID;
+        this.postMakerName = postMakerName;
         this.postDate = postDate;
         this.image_path = image_path;
         this.postText = postText;
@@ -52,12 +55,20 @@ public class Post {
         this.postText = postText;
     }
 
-    public userDTO getPostMaker() {
-        return postMaker;
+    public Integer getPostMakerID() {
+        return postMakerID;
     }
 
-    public void setPostMaker(userDTO postMaker) {
-        this.postMaker = postMaker;
+    public void setPostMakerID(Integer postMakerID) {
+        this.postMakerID = postMakerID;
+    }
+
+    public String getPostMakerName() {
+        return postMakerName;
+    }
+
+    public void setPostMakerName(String postMakerName) {
+        this.postMakerName = postMakerName;
     }
 
     public Date getPostDate() {
@@ -100,9 +111,9 @@ public class Post {
         this.postComments = postComments;
     }
 
-    public void addLike(Integer userID,String userName,Profile userProfile){
-        userDTO liking = new userDTO(userID,userName,userProfile);
-        this.postLikes.add(new Like(liking));
+    public void addLike(Integer userID,String userName){
+
+        this.postLikes.add(new Like(userName, userID));
     }
 
     public void removeLike(Integer userID) {
@@ -110,7 +121,7 @@ public class Post {
 
         Like target = null;
         for (int i = 0; i < postLikes.size(); i++) {
-            if (postLikes.get(i).userMadeLike.userID().equals(userID)) {
+            if (postLikes.get(i).getUserID().equals(userID)) {
                 target = postLikes.get(i);
                 break;
             }

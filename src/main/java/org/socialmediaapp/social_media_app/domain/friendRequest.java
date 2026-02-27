@@ -3,19 +3,22 @@ package org.socialmediaapp.social_media_app.domain;
 import java.util.Date;
 
 public class friendRequest {
-    private userDTO sourceUser;
+    private Integer SourceUserID;
+    private String SourceUserName;
     private Date sendDate;
     private Integer requestID;
     private Integer receiverID;
 
-    public friendRequest(userDTO sourceUser, Date sendDate,Integer receiverID) {
-        this.sourceUser = sourceUser;
+    public friendRequest(Integer SourceUserID , String SourceUserName, Date sendDate,Integer receiverID) {
+        this.SourceUserID = SourceUserID;
+        this.SourceUserName = SourceUserName;
         this.sendDate = sendDate;
         this.receiverID = receiverID;
     }
 
-    public friendRequest(userDTO sourceUser, Date sendDate, Integer requestID,Integer receiverID) {
-        this.sourceUser = sourceUser;
+    public friendRequest(Integer SourceUserID , String SourceUserName, Date sendDate, Integer requestID,Integer receiverID) {
+        this.SourceUserID = SourceUserID;
+        this.SourceUserName = SourceUserName;
         this.sendDate = sendDate;
         this.requestID = requestID;
         this.receiverID = receiverID;
@@ -29,12 +32,20 @@ public class friendRequest {
         this.receiverID = receiverID;
     }
 
-    public userDTO getSourceUser() {
-        return sourceUser;
+    public Integer getSourceUserID() {
+        return SourceUserID;
     }
 
-    public void setSourceUser(userDTO sourceUser) {
-        this.sourceUser = sourceUser;
+    public void setSourceUserID(Integer sourceUserID) {
+        SourceUserID = sourceUserID;
+    }
+
+    public String getSourceUserName() {
+        return SourceUserName;
+    }
+
+    public void setSourceUserName(String sourceUserName) {
+        SourceUserName = sourceUserName;
     }
 
     public Date getSendDate() {
