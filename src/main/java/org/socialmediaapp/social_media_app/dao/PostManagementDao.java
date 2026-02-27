@@ -163,12 +163,12 @@ return LikesList;
                 ResultSet rs = stmt.executeQuery(sql);
         ){
             while(rs.next()){
-                userDTO postMaker = this.userDao.getUserDTOByID(rs.getInt("user_post"));
-                List<Like> postLikes = this.getPostLikes(rs.getInt("post_id"));
-                List<Comment> postComments = this.getPostComments(rs.getInt("post_id"));
+                userDTO postMaker = this.userDao.getUserDTOByID(rs.getInt("user_id"));
+                List<Like> postLikes = this.getPostLikes(rs.getInt("id"));
+                List<Comment> postComments = this.getPostComments(rs.getInt("id"));
 
                Post exploredPost  = new Post(postMaker,(java.util.Date) rs.getDate("post_date"),rs.getString("post_image_path")
-                       ,rs.getInt("post_id"),postLikes,postComments,rs.getString("post_text"),rs.getString("privacy"));
+                       ,rs.getInt("id"),postLikes,postComments,rs.getString("post_text"),rs.getString("privacy"));
             PostsList.add(exploredPost);
             }
 
@@ -186,7 +186,7 @@ return LikesList;
 
     public List<Post> getPostsForUseFeed(Integer userID){
 
-        String sql = "select p.id , p.user_id , p.post_text,p.post_image_path,p.privacy\n" +
+        String sql = "select p.id , p.user_id , p.post_text,p.post_image_path,p.post_date,p.privacy\n" +
                 "from posts p\n" +
                 "join post_notifications pn on p.id = pn.post_id\n" +
                 "join app_user_post_notifications apupn on pn.id = apupn.notification_id\n" +
@@ -197,12 +197,12 @@ return LikesList;
                 ResultSet rs = stmt.executeQuery(sql);
         ){
             while(rs.next()){
-                userDTO postMaker = this.userDao.getUserDTOByID(rs.getInt("user_post"));
-                List<Like> postLikes = this.getPostLikes(rs.getInt("post_id"));
-                List<Comment> postComments = this.getPostComments(rs.getInt("post_id"));
+                userDTO postMaker = this.userDao.getUserDTOByID(rs.getInt("user_id"));
+                List<Like> postLikes = this.getPostLikes(rs.getInt("id"));
+                List<Comment> postComments = this.getPostComments(rs.getInt("id"));
 
                 Post exploredPost  = new Post(postMaker,(java.util.Date) rs.getDate("post_date"),rs.getString("post_image_path")
-                        ,rs.getInt("post_id"),postLikes,postComments,rs.getString("post_text"),rs.getString("privacy"));
+                        ,rs.getInt("id"),postLikes,postComments,rs.getString("post_text"),rs.getString("privacy"));
                 PostsList.add(exploredPost);
             }
 

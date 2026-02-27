@@ -3,8 +3,8 @@ import java.sql.*;
 public class DatabaseConnection {
     // implementing database connection using singleton design pattern
     private static String constring = "jdbc:mysql://localhost:3306/social_media_app_db";
-    private static String username = "springstudent";
-    private static String password = "springstudent";
+    private static String username = "root";
+    private static String password = "root";
 
 
     private static Connection connection = null;

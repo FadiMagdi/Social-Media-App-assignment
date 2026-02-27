@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" styleClass="scroll-pane"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.socialmediaapp.social_media_app.controller.NewsFeedController">
+
+    <VBox spacing="15" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="10" bottom="20" left="40" right="40"/>
+        </padding>
+
+        <!-- Create Post Section -->
+        <VBox styleClass="create-post-box" spacing="12" maxWidth="600">
+
+            <Label text="Create Post" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <!-- Post Text -->
+            <TextArea fx:id="postTextArea" promptText="What's on your mind?"
+                      prefRowCount="3" wrapText="true"
+                      style="-fx-background-color: #F0F2F5; -fx-border-color: #DADDE1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;"/>
+
+            <!-- Post Options Row -->
+            <HBox spacing="10" alignment="CENTER_LEFT" styleClass="create-post-actions">
+                <!-- Image -->
+                <Button text="Add Image" onAction="#handleAddImage" styleClass="btn-outline"/>
+                <Label fx:id="selectedImageLabel" text="" style="-fx-text-fill: #65676B; -fx-font-size: 12px;"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Privacy -->
+                <Label text="Privacy:" style="-fx-text-fill: #65676B;"/>
+                <ComboBox fx:id="privacyCombo" styleClass="privacy-combo" prefWidth="130"/>
+
+                <!-- Post Button -->
+                <Button text="Post" onAction="#handleCreatePost" styleClass="btn-primary"/>
+            </HBox>
+        </VBox>
+
+        <!-- Separator -->
+        <Separator maxWidth="600"/>
+
+        <!-- Posts Feed Container -->
+        <VBox fx:id="postsContainer" spacing="15" alignment="TOP_CENTER" maxWidth="600">
+            <!-- Post cards will be added here dynamically -->
+            <Label fx:id="emptyFeedLabel" text="No posts yet. Be the first to share something!"
+                   style="-fx-text-fill: #65676B; -fx-font-size: 15px; -fx-padding: 40 0;"
+                   visible="true"/>
+        </VBox>
+
+    </VBox>
+
+</ScrollPane>

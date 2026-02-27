@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" alignment="CENTER" style="-fx-background-color: #FFFFFF; -fx-padding: 30;"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.socialmediaapp.social_media_app.controller.EditProfileController">
+
+    <Label text="Edit Profile" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1C1E21;"/>
+
+    <Separator/>
+
+    <!-- Error/Success Message -->
+    <Label fx:id="messageLabel" styleClass="error-label" visible="false" managed="false" wrapText="true"/>
+
+    <!-- Name -->
+    <VBox spacing="4">
+        <Label text="Name" style="-fx-font-weight: bold; -fx-text-fill: #65676B;"/>
+        <TextField fx:id="nameField" styleClass="auth-field" maxWidth="350"/>
+    </VBox>
+
+    <!-- Bio -->
+    <VBox spacing="4">
+        <Label text="Bio" style="-fx-font-weight: bold; -fx-text-fill: #65676B;"/>
+        <TextArea fx:id="bioField" prefRowCount="3" wrapText="true" maxWidth="350"
+                  style="-fx-background-color: #F0F2F5; -fx-border-color: #DADDE1; -fx-border-radius: 8; -fx-background-radius: 8;"/>
+    </VBox>
+
+    <!-- Profile Picture -->
+    <VBox spacing="4">
+        <Label text="Profile Picture" style="-fx-font-weight: bold; -fx-text-fill: #65676B;"/>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Button text="Browse..." onAction="#handleBrowseImage" styleClass="btn-outline"/>
+            <Label fx:id="imagePathLabel" text="No file selected"
+                   style="-fx-text-fill: #65676B; -fx-font-size: 12px;"
+                   maxWidth="200" ellipsisString="..."/>
+        </HBox>
+    </VBox>
+
+    <Separator/>
+
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Save Changes" onAction="#handleSave" styleClass="btn-primary"/>
+        <Button text="Cancel" onAction="#handleCancel" styleClass="btn-outline"/>
+    </HBox>
+
+</VBox>

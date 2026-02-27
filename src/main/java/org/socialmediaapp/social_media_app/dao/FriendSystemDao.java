@@ -88,7 +88,7 @@ return success;
 
         // delete the friend request
 
-        String delsql = "Delete  from  table friend_request where id = ?";
+        String delsql = "DELETE FROM friend_request WHERE id = ?";
 
         try(
                 PreparedStatement stmt = this.DBConnection.prepareStatement(delsql);
@@ -97,7 +97,7 @@ return success;
             int rows = stmt.executeUpdate();
             if(rows >0){
 
-                System.out.println("student deleted successfully");
+                System.out.println("friend request deleted successfully");
             }
         } catch (SQLException e) {
             System.out.println("Could not delete friend request");
@@ -110,7 +110,7 @@ return success;
     public boolean ignoreFriendRequest(friendRequest friendReq){
         boolean success = false;
 
-        String delsql = "Delete  from  table friend_request where id = ?";
+        String delsql = "DELETE FROM friend_request WHERE id = ?";
 
         try(
                 PreparedStatement stmt = this.DBConnection.prepareStatement(delsql);
@@ -119,7 +119,7 @@ return success;
             int rows = stmt.executeUpdate();
             if(rows >0){
 success = true;
-                System.out.println("student deleted successfully");
+                System.out.println("friend request deleted successfully");
             }
         } catch (SQLException e) {
             System.out.println("Could not delete friend request");

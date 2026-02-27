@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<VBox styleClass="post-card" spacing="10" maxWidth="600"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.socialmediaapp.social_media_app.controller.PostCardController">
+
+    <!-- Post Header: User info + date -->
+    <HBox styleClass="post-header" spacing="10" alignment="CENTER_LEFT">
+        <!-- Profile pic placeholder -->
+        <VBox alignment="CENTER" minWidth="40" minHeight="40" maxWidth="40" maxHeight="40"
+              style="-fx-background-color: #1877F2; -fx-background-radius: 20;">
+            <Label fx:id="avatarInitial" text="U"
+                   style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;"/>
+        </VBox>
+
+        <VBox spacing="2">
+            <Label fx:id="usernameLabel" text="Username" styleClass="post-username"/>
+            <HBox spacing="8">
+                <Label fx:id="dateLabel" text="Date" styleClass="post-date"/>
+                <Label fx:id="privacyLabel" text="Public" styleClass="post-privacy"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <!-- Post Text -->
+    <Label fx:id="postTextLabel" text="" styleClass="post-text" wrapText="true"/>
+
+    <!-- Post Image -->
+    <ImageView fx:id="postImageView" fitWidth="560" preserveRatio="true" managed="false"
+               visible="false" style="-fx-border-radius: 8;"/>
+
+    <!-- Stats Row -->
+    <HBox styleClass="post-stats" spacing="15">
+        <Label fx:id="likesCountLabel" text="0 Likes"/>
+        <Label fx:id="commentsCountLabel" text="0 Comments"/>
+    </HBox>
+
+    <!-- Action Buttons -->
+    <HBox styleClass="post-actions" spacing="0" alignment="CENTER">
+        <Button fx:id="likeBtn" text="Like" onAction="#handleLike"
+                styleClass="post-action-btn" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Button fx:id="commentBtn" text="Comment" onAction="#handleToggleComments"
+                styleClass="post-action-btn" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+    </HBox>
+
+    <!-- Comments Section (togglable) -->
+    <VBox fx:id="commentsSection" spacing="8" managed="false" visible="false">
+
+        <!-- Existing Comments -->
+        <VBox fx:id="commentsContainer" spacing="6">
+            <!-- Comments will be added dynamically -->
+        </VBox>
+
+        <!-- Add Comment -->
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <TextField fx:id="commentInput" promptText="Write a comment..."
+                       styleClass="comment-input" HBox.hgrow="ALWAYS"/>
+            <Button text="Send" onAction="#handleAddComment" styleClass="btn-primary"
+                    style="-fx-font-size: 12px; -fx-padding: 8 14;"/>
+        </HBox>
+    </VBox>
+
+</VBox>

@@ -154,15 +154,15 @@ boolean success = false;
  public User getUserByEmail(String Email){
      User targetUser = null;
      //getting the user himself
-     String usersql = "select id, name from app_user where email = "+ Email;
+     String usersql = "select id, name, email, password, age from app_user where email = "+ Email;
 
      try(
              Statement stmt = this.DBConnection.createStatement();
              ResultSet rs = stmt.executeQuery(usersql);
      ){
-
-         targetUser = new User(rs.getInt("id"),rs.getString("email"),rs.getString("password"),rs.getString("name"),rs.getInt("age"));
-
+         if(rs.next()) {
+             targetUser = new User(rs.getInt("id"), rs.getString("email"), rs.getString("password"), rs.getString("name"), rs.getInt("age"));
+         }
 
      } catch (SQLException e) {
          throw new RuntimeException(e);

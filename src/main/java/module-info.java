@@ -10,5 +10,8 @@ module org.socialmediaapp.social_media_app {
     requires java.sql;
 
     opens org.socialmediaapp.social_media_app to javafx.fxml;
+    opens org.socialmediaapp.social_media_app.controller to javafx.fxml;
     exports org.socialmediaapp.social_media_app;
+    exports org.socialmediaapp.social_media_app.controller;
+    exports org.socialmediaapp.social_media_app.util;
 }
