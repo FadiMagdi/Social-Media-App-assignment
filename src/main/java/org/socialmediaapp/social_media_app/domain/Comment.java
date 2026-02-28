@@ -18,11 +18,11 @@ public class Comment {
     }
 
 
-    public Comment(String userName, String commentText, Date commentDate, Integer commentID) {
+    public Comment(String userName, String commentText, Date commentDate, Integer userID) {
         this.userName = userName;
         this.commentText = commentText;
         this.commentDate = commentDate;
-        this.commentID = commentID;
+        this.userID = userID;
     }
 
     public String getUserName() {

@@ -27,6 +27,14 @@ public class Notification {
         this.postID = postID;
     }
 
+    public Integer getPostID() {
+        return postID;
+    }
+
+    public void setPostID(Integer postID) {
+        this.postID = postID;
+    }
+
     public Integer getNotificationID() {
         return notificationID;
     }

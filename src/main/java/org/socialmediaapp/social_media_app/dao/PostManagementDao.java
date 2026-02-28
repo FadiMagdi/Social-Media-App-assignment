@@ -127,7 +127,7 @@ return LikesList;
 
 
     // Posts
-    public boolean addPosts(Post newPost) {
+    public boolean addPost(Post newPost) {
         boolean success = false;
         // adding the notification to post_notification table
         String sql = "INSERT INTO posts (user_id,post_text,post_image_path,post_date,privacy) values (?,?,?,?,?)";
@@ -223,5 +223,41 @@ return LikesList;
 
 
     }
+
+
+    // getting posts based on privacy
+    // to test in mysql
+    public List<Post> getPostsByUserIDAndPrivacy (Integer userID,String privacy){
+
+        String sql = "select po.id,po.user_id,po.post_date,po.post_image_path,po.post_text,po.privacy,apu.name\n" +
+                "from posts po \n" +
+                "join app_user apu\n" +
+                "on po.user_id = apu.id\n" +
+                "where po.id = "+ String.valueOf(userID) + "and po.privacy = " + privacy   ;
+        List<Post> PostsList = new ArrayList<Post>();
+        try(
+                Statement stmt = this.DBConnection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+        ){
+            while(rs.next()){
+
+                List<Like> postLikes = this.getPostLikes(rs.getInt("post_id"));
+                List<Comment> postComments = this.getPostComments(rs.getInt("post_id"));
+
+                Post exploredPost  = new Post(rs.getInt("user_id"),rs.getString("name"),(java.util.Date) rs.getDate("post_date"),rs.getString("post_image_path")
+                        ,rs.getInt("post_id"),postLikes,postComments,rs.getString("post_text"),rs.getString("privacy"));
+                PostsList.add(exploredPost);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return PostsList;
+
+
+    }
+
+
 
 }

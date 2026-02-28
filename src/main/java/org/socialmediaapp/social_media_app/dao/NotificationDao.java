@@ -47,7 +47,7 @@ public class NotificationDao {
                 PreparedStatement stmt = this.DBConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         ) {
-            stmt.setInt(1, not.getNotificationID());
+            stmt.setInt(1, not.getPostID());
             stmt.setInt(2, not.getSourceUserID());
             stmt.setString(3, not.getNotificationText());
             stmt.setString(4, not.getTopic());
