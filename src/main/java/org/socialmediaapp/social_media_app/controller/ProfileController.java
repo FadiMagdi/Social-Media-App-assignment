@@ -106,7 +106,21 @@ public class ProfileController {
         userPostsContainer.getChildren().clear();
         List<Post> posts = postService.getUserPosts(userId);
 
+        // Filter posts based on privacy and friendship status
+        int currentUserId = SessionManager.getInstance().getCurrentUserId();
+        if (userId != currentUserId) {
+            boolean areFriends = friendService.areFriends(currentUserId, userId);
+            posts = posts.stream().filter(post -> {
+                String privacy = post.getPrivacy();
+                if ("Public".equalsIgnoreCase(privacy)) return true;
+                if ("Friends Only".equalsIgnoreCase(privacy) && areFriends) return true;
+                return false;
+            }).toList();
+        }
+
         if (posts.isEmpty()) {
+            noPostsLabel.setVisible(true);
+            noPostsLabel.setManaged(true);
             userPostsContainer.getChildren().add(noPostsLabel);
         } else {
             noPostsLabel.setVisible(false);

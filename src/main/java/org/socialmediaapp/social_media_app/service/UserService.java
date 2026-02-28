@@ -5,6 +5,7 @@ import org.socialmediaapp.social_media_app.dao.UserDao;
 import org.socialmediaapp.social_media_app.database.DatabaseConnection;
 import org.socialmediaapp.social_media_app.domain.User;
 import org.socialmediaapp.social_media_app.domain.UserDTO;
+import org.socialmediaapp.social_media_app.util.PasswordUtil;
 
 import java.sql.Connection;
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserService {
     /** Authenticate user by email and password. Returns User if valid, null otherwise. */
     public User login(String email, String password) {
         User user = userDao.getUserByEmail(email);
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && PasswordUtil.verifyPassword(password, user.getPassword())) {
             return user;
         }
         return null;
@@ -35,7 +36,8 @@ public class UserService {
 
     /** Register a new user. Returns true if successful. */
     public boolean register(String name, String email, String password, int age) {
-        return userDao.createUser(email, password, name, age);
+        String hashedPassword = PasswordUtil.hashPassword(password);
+        return userDao.createUser(email, hashedPassword, name, age);
     }
 
     /** Get user profile info as a DTO. */
