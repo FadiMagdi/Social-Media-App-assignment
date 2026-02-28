@@ -64,6 +64,55 @@ return targetUser;
     }
 
 
+
+    public userDTO getUserDTOByName(String userName){
+        userDTO targetUser = null;
+        Integer userID = -1;
+
+        // getting the userID
+        String usersql = "select id, name from app_user where name = "+userName;
+
+                try(
+                        Statement stmt = this.DBConnection.createStatement();
+                        ResultSet rs = stmt.executeQuery(usersql);
+                ){
+
+                       userID = rs.getInt("id");
+
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+        //getting user profile
+
+        String sql = "select * from profile where user_id = "+ String.valueOf(userID);
+
+        try(
+                Statement stmt = this.DBConnection.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+        ){
+
+            Profile checkProfile = new Profile(rs.getString("bio"), rs.getString("image_path") ,rs.getInt("id")) ;
+
+
+targetUser = new userDTO(userID,userName,checkProfile);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+
+        }
+
+
+        return targetUser;
+
+
+
+
+
+    }
+
  public boolean createUser(String email, String password, String userName, int age,String bio,String image_path){
 
         // create the user

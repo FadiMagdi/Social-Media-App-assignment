@@ -28,6 +28,13 @@ public class UserService {
         return retrieved;
     }
 
+    public userDTO getUserDTOByName(String userName){
+        userDTO retrieved =  this.userDao.getUserDTOByName(userName);
+        List<Post> userPosts = this.postManagementService.getPostsByUserIDAndPrivacy(retrieved.getUserID(),"public");
+        retrieved.setUserPosts(userPosts);
+        return retrieved;
+    }
+
 
     public boolean createUser(String email, String password, String userName, int age,String bio,String image_path){
         return this.userDao.createUser( email, password, userName,  age, bio,image_path);
