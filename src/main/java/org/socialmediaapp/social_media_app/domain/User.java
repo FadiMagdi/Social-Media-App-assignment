@@ -151,7 +151,7 @@ public class User {
 
         for(int i=0;i<this.friends.size();i++){
             userDTO currentFriend = this.friends.get(i);
-            if(currentFriend.userID().equals(userID)){
+            if(currentFriend.getUserID().equals(userID)){
                 remFriend = currentFriend;
                 break;
             }

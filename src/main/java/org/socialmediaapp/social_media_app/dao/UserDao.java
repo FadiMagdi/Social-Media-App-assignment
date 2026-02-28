@@ -117,6 +117,8 @@ return targetUser;
 
  }
 
+
+ // should be update profile
  public boolean createProfile(Integer userID , String bio , String image_Path){
      // creating the profile
 boolean success = false;

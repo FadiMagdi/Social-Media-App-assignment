@@ -11,7 +11,6 @@ public class PostManagementDao {
 private Connection DBConnection;
 
 
-
     public PostManagementDao(Connection DBConnection) {
         this.DBConnection = DBConnection;
 

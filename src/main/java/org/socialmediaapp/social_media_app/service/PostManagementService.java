@@ -4,6 +4,7 @@ import org.socialmediaapp.social_media_app.dao.PostManagementDao;
 import org.socialmediaapp.social_media_app.domain.Comment;
 import org.socialmediaapp.social_media_app.domain.Like;
 import org.socialmediaapp.social_media_app.domain.Post;
+import org.socialmediaapp.social_media_app.domain.userDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.List;
 public class PostManagementService {
 
     private PostManagementDao postManagementDao;
+
+
+
 
     public PostManagementService(PostManagementDao postManagementDao) {
         this.postManagementDao = postManagementDao;
@@ -50,11 +54,37 @@ public class PostManagementService {
         return this.postManagementDao.addPost(newPost);
     }
     public List<Post> getPostsByUserID (Integer userID){
-        return this.postManagementDao.getPostsByUserID(userID);
+        List<Post> postsMadeByUser =  this.postManagementDao.getPostsByUserID(userID);
+
+        for(int i=0 ; i<postsMadeByUser.size() ; i++){
+            Post currentPost = postsMadeByUser.get(i);
+
+            List<Like> postLikes = this.getPostLikes(currentPost.getPostID());
+            List<Comment> postComments = this.getPostComments(currentPost.getPostID());
+
+
+            currentPost.setPostLikes(postLikes);
+            currentPost.setPostComments(postComments);
+
+        }
+
+        return postsMadeByUser;
     }
 
     public List<Post> getPostsForNewsFeed(Integer userID){
-        return this.postManagementDao.getPostsForNewsFeed(userID);
+        List<Post> postsInNewsFeed = this.postManagementDao.getPostsForNewsFeed(userID);
+
+        for(int i=0 ; i<postsInNewsFeed.size() ; i++){
+            Post currentPost = postsInNewsFeed.get(i);
+
+            List<Like> postLikes = this.getPostLikes(currentPost.getPostID());
+            List<Comment> postComments = this.getPostComments(currentPost.getPostID());
+
+            currentPost.setPostLikes(postLikes);
+            currentPost.setPostComments(postComments);
+        }
+
+        return postsInNewsFeed;
     }
 
     public List<Post> getPostsByUserIDAndPrivacy (Integer userID,String privacy){
