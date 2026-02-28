@@ -87,6 +87,15 @@ public class ProfileController {
             addFriendBtn.setManaged(true);
             profileEmailLabel.setText("");
             profileAgeLabel.setText("");
+
+            if (friendService.areFriends(currentUserId, userId)) {
+                addFriendBtn.setText("Friends ✓");
+                addFriendBtn.setDisable(true);
+                addFriendBtn.setStyle("-fx-background-color: #E4E6EB; -fx-text-fill: #1C1E21;");
+            } else if (friendService.hasPendingRequest(currentUserId, userId)) {
+                addFriendBtn.setText("Request Sent");
+                addFriendBtn.setDisable(true);
+            }
         }
 
         // Load user posts

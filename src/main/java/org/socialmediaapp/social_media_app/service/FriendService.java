@@ -58,6 +58,16 @@ public class FriendService {
         return friendDao.deleteRequest(requestId);
     }
 
+    /** Check if two users are friends. */
+    public boolean areFriends(int userId1, int userId2) {
+        return friendDao.areFriends(userId1, userId2);
+    }
+
+    /** Check if a friend request is pending. */
+    public boolean hasPendingRequest(int senderId, int receiverId) {
+        return friendDao.hasPendingRequest(senderId, receiverId);
+    }
+
     /** Get all friends of a user. */
     public List<UserDTO> getFriends(int userId) {
         return friendDao.getFriends(userId);

@@ -35,23 +35,27 @@ public class NotificationsController {
             List<Notification> notifications = notifDao.getNotifications(userId);
 
             if (notifications.isEmpty()) {
+                noNotificationsLabel.setVisible(true);
                 notificationsContainer.getChildren().add(noNotificationsLabel);
             } else {
-                noNotificationsLabel.setVisible(false);
                 for (Notification notif : notifications) {
-                    String text = notif.getText() != null ? notif.getText() : "New notification";
+                    String text = (notif.getText() != null && !notif.getText().isBlank())
+                            ? notif.getText()
+                            : "New " + (notif.getType() != null ? notif.getType() : "") + " notification";
                     String date = notif.getDate() != null ? " - " + dateFormat.format(notif.getDate()) : "";
 
                     Label label = new Label(text + date);
                     label.setWrapText(true);
-                    label.setStyle("-fx-padding: 12; -fx-background-color: white; -fx-background-radius: 8;");
+                    label.setMaxWidth(Double.MAX_VALUE);
+                    label.setStyle("-fx-padding: 12; -fx-background-color: white; -fx-background-radius: 8; -fx-font-size: 14px; -fx-text-fill: #1C1E21;");
                     notificationsContainer.getChildren().add(label);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Label errorLabel = new Label("No notifications yet.");
-            errorLabel.setStyle("-fx-text-fill: #65676B; -fx-padding: 20;");
+            notificationsContainer.getChildren().clear();
+            Label errorLabel = new Label("Could not load notifications.");
+            errorLabel.setStyle("-fx-text-fill: #65676B; -fx-padding: 20; -fx-font-size: 14px;");
             notificationsContainer.getChildren().add(errorLabel);
         }
     }

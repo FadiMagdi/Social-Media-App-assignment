@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="15"
+<VBox spacing="15" fillWidth="true"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.socialmediaapp.social_media_app.controller.NotificationsController">
 
@@ -14,8 +14,8 @@
 
     <Label text="Notifications" styleClass="section-title"/>
 
-    <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
-        <VBox fx:id="notificationsContainer" spacing="8">
+    <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+        <VBox fx:id="notificationsContainer" spacing="8" fillWidth="true">
             <padding>
                 <Insets top="5" bottom="10" left="5" right="5"/>
             </padding>

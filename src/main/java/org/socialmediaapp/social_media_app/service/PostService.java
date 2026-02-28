@@ -28,10 +28,10 @@ public class PostService {
         this.notificationDao = new NotificationDao(conn);
     }
 
-    /** Create a new post for the given user. */
-    public boolean createPost(int userId, String text, String imagePath, String privacy) {
+    /** Create a new post for the given user. Returns the post ID, or -1 on failure. */
+    public int createPost(int userId, String text, String imagePath, String privacy) {
         UserDTO author = userDao.getUserDTOById(userId);
-        if (author == null) return false;
+        if (author == null) return -1;
 
         Post post = new Post(author, text, imagePath, new Date(), privacy);
         return postDao.createPost(post);

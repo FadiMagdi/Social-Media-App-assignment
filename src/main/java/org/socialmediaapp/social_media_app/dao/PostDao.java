@@ -21,19 +21,25 @@ public class PostDao {
 
     // ── Post CRUD ──
 
-    public boolean createPost(Post post) {
+    public int createPost(Post post) {
         String sql = "INSERT INTO posts (user_id, post_text, post_image_path, post_date, privacy) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, post.getAuthor().id());
             stmt.setString(2, post.getText());
             stmt.setString(3, post.getImagePath());
             stmt.setDate(4, new java.sql.Date(post.getDate().getTime()));
             stmt.setString(5, post.getPrivacy());
-            return stmt.executeUpdate() > 0;
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                ResultSet keys = stmt.getGeneratedKeys();
+                if (keys.next()) {
+                    return keys.getInt(1);
+                }
+            }
         } catch (SQLException e) {
             System.err.println("Error creating post: " + e.getMessage());
         }
-        return false;
+        return -1;
     }
 
     public List<Post> getPostsByUserId(int userId) {

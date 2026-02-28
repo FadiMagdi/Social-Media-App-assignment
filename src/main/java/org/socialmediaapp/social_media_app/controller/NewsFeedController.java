@@ -10,6 +10,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import org.socialmediaapp.social_media_app.HelloApplication;
 import org.socialmediaapp.social_media_app.domain.Post;
+import org.socialmediaapp.social_media_app.domain.UserDTO;
+import org.socialmediaapp.social_media_app.service.FriendService;
+import org.socialmediaapp.social_media_app.service.NotificationService;
 import org.socialmediaapp.social_media_app.service.PostService;
 import org.socialmediaapp.social_media_app.util.SessionManager;
 
@@ -21,12 +24,18 @@ import java.util.List;
  */
 public class NewsFeedController {
 
-    @FXML private TextArea postTextArea;
-    @FXML private ComboBox<String> privacyCombo;
-    @FXML private VBox postsContainer;
-    @FXML private Label emptyFeedLabel;
+    @FXML
+    private TextArea postTextArea;
+    @FXML
+    private ComboBox<String> privacyCombo;
+    @FXML
+    private VBox postsContainer;
+    @FXML
+    private Label emptyFeedLabel;
 
     private final PostService postService = new PostService();
+    private final NotificationService notificationService = new NotificationService();
+    private final FriendService friendsService = new FriendService();
 
     @FXML
     public void initialize() {
@@ -38,11 +47,24 @@ public class NewsFeedController {
     @FXML
     private void handleCreatePost() {
         String text = postTextArea.getText() != null ? postTextArea.getText().trim() : "";
-        if (text.isEmpty()) return;
+        if (text.isEmpty())
+            return;
 
         int userId = SessionManager.getInstance().getCurrentUserId();
-        boolean success = postService.createPost(userId, text, "", privacyCombo.getValue());
-        if (success) {
+
+        int postID = postService.createPost(userId, text, "", privacyCombo.getValue());
+        if (postID != -1) {
+            // create notification
+            if (!privacyCombo.getValue().equals("Private")) {
+                List<UserDTO> userFriends = this.friendsService.getFriends(userId);
+                String postMakerName = SessionManager.getInstance().getCurrentUser().getName();
+                String Notification_Text = postMakerName + " posted an update";
+                for (int i = 0; i < userFriends.size(); i++) {
+                    this.notificationService.createNotification(userId, userFriends.get(i).id(), postID, "Post",
+                            Notification_Text);
+                }
+            }
+
             postTextArea.clear();
             loadFeed();
         }
@@ -61,7 +83,7 @@ public class NewsFeedController {
             for (Post post : posts) {
                 try {
                     FXMLLoader loader = new FXMLLoader(
-                        HelloApplication.class.getResource("post-card.fxml"));
+                            HelloApplication.class.getResource("post-card.fxml"));
                     Parent card = loader.load();
                     PostCardController ctrl = loader.getController();
                     ctrl.setPost(post);

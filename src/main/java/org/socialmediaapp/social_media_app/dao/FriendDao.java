@@ -94,6 +94,32 @@ public class FriendDao {
 
     // ── Friends List ──
 
+    public boolean areFriends(int userId1, int userId2) {
+        String sql = "SELECT 1 FROM friends WHERE user1_id = ? AND user2_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId1);
+            stmt.setInt(2, userId2);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.err.println("Error checking friendship: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean hasPendingRequest(int senderId, int receiverId) {
+        String sql = "SELECT 1 FROM friend_request WHERE sender_id = ? AND receiver_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, senderId);
+            stmt.setInt(2, receiverId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.err.println("Error checking pending request: " + e.getMessage());
+        }
+        return false;
+    }
+
     public List<UserDTO> getFriends(int userId) {
         List<UserDTO> friends = new ArrayList<>();
         String sql = "SELECT user2_id FROM friends WHERE user1_id = ?";
