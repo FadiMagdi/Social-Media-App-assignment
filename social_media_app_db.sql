@@ -8,7 +8,7 @@ id INT auto_increment primary key ,
 age INT,
 name varchar(30),
 email varchar(50) unique,
-password varchar(25)
+password varchar(256)
 );
 
 drop table if exists profile;
@@ -48,7 +48,7 @@ create table posts(
 id INT auto_increment primary key,
 user_id INT,
 post_text Text,
-post_image_path varchar(50),
+post_image_path varchar(256),
 post_date date,
 privacy varchar(20),
 foreign key(user_id) references app_user(id) 

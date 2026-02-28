@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane styleClass="main-container"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.socialmediaapp.social_media_app.controller.MainController">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="15">
+            <Label text="Social Media" styleClass="top-bar-logo"/>
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <TextField fx:id="searchField" promptText="Search..."
+                       styleClass="search-field" onAction="#handleSearch"/>
+            <Button text="Search" onAction="#handleSearch" styleClass="top-bar-btn"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="Notifications" onAction="#handleNotifications" styleClass="top-bar-btn"/>
+            <Button text="My Profile" onAction="#handleMyProfile" styleClass="top-bar-btn"/>
+        </HBox>
+    </top>
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox styleClass="sidebar" spacing="5">
+            <padding>
+                <Insets top="15" bottom="15" left="10" right="10"/>
+            </padding>
+
+            <Label fx:id="userNameLabel" text="Welcome"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1C1E21; -fx-padding: 0 0 10 16;"/>
+
+            <Separator/>
+
+            <Button fx:id="feedBtn" text="   News Feed" onAction="#handleFeed"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+
+            <Button fx:id="myProfileBtn" text="   My Profile" onAction="#handleMyProfile"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+
+            <Button fx:id="friendsBtn" text="   Friends" onAction="#handleFriends"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+
+            <Button fx:id="notificationsBtn" text="   Notifications" onAction="#handleNotifications"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+
+            <Button fx:id="searchBtn" text="   Search" onAction="#handleSearchPage"
+                    styleClass="sidebar-btn" maxWidth="Infinity"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+            <Separator/>
+
+            <Button text="   Logout" onAction="#handleLogout"
+                    styleClass="sidebar-btn" maxWidth="Infinity"
+                    style="-fx-text-fill: #FA3E3E;"/>
+        </VBox>
+    </left>
+
+    <!-- CONTENT AREA -->
+    <center>
+        <BorderPane fx:id="contentArea" styleClass="content-area">
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
+        </BorderPane>
+    </center>
+</BorderPane>

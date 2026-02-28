@@ -42,7 +42,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>org.socialmediaapp.social_media_app/org.socialmediaapp.social_media_app.HelloApplication</mainClass>
+              <mainClass>org.socialmediaapp.social_media_app.HelloApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

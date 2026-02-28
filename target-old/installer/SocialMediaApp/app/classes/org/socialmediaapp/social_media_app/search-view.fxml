@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.socialmediaapp.social_media_app.controller.SearchController">
+
+    <padding>
+        <Insets top="10" bottom="20" left="20" right="20"/>
+    </padding>
+
+    <Label text="Search" styleClass="section-title"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Search for users or posts..."
+                   styleClass="search-field" HBox.hgrow="ALWAYS"
+                   onAction="#handleSearch"/>
+        <Button text="Search" onAction="#handleSearch" styleClass="btn-primary"/>
+    </HBox>
+
+    <Separator/>
+
+    <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+        <VBox spacing="15">
+            <padding>
+                <Insets top="5" bottom="10"/>
+            </padding>
+
+            <Label fx:id="usersHeader" text="Users" styleClass="section-title"
+                   style="-fx-font-size: 17px;" visible="false" managed="false"/>
+            <VBox fx:id="usersResultsContainer" spacing="8"/>
+
+            <Label fx:id="postsHeader" text="Posts" styleClass="section-title"
+                   style="-fx-font-size: 17px;" visible="false" managed="false"/>
+            <VBox fx:id="postsResultsContainer" spacing="12"/>
+
+            <Label fx:id="noResultsLabel" text="Search for users or posts above."
+                   style="-fx-text-fill: #65676B; -fx-font-size: 14px; -fx-padding: 20 0;"/>
+        </VBox>
+    </ScrollPane>
+</VBox>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<ScrollPane fitToWidth="true" styleClass="scroll-pane"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.socialmediaapp.social_media_app.controller.ProfileController">
+
+    <VBox spacing="15" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="10" bottom="20" left="40" right="40"/>
+        </padding>
+
+        <!-- Profile Header -->
+        <VBox styleClass="profile-header" spacing="15" alignment="CENTER" maxWidth="600">
+
+            <!-- Avatar -->
+            <StackPane maxWidth="100" maxHeight="100">
+                <Circle radius="50" fill="#1877F2"/>
+                <ImageView fx:id="profileImageView" fitWidth="100" fitHeight="100" preserveRatio="true">
+                    <clip><Circle centerX="50" centerY="50" radius="50"/></clip>
+                </ImageView>
+                <Label fx:id="profileInitial" text="U"
+                       style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 36px;"/>
+            </StackPane>
+
+            <Label fx:id="profileNameLabel" text="User Name" styleClass="profile-name"/>
+            <Label fx:id="profileBioLabel" text="No bio yet" styleClass="profile-bio"
+                   wrapText="true" maxWidth="500"/>
+
+            <!-- Stats -->
+            <HBox spacing="40" alignment="CENTER">
+                <VBox alignment="CENTER" spacing="2">
+                    <Label fx:id="profileEmailLabel" text=""
+                           style="-fx-font-size: 13px; -fx-text-fill: #65676B;"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="2">
+                    <Label fx:id="profileAgeLabel" text=""
+                           style="-fx-font-size: 13px; -fx-text-fill: #65676B;"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="2">
+                    <Label fx:id="friendsCountLabel" text="0" styleClass="profile-stat-value"/>
+                    <Label text="Friends" styleClass="profile-stat-label"/>
+                </VBox>
+            </HBox>
+
+            <!-- Action Buttons -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="editProfileBtn" text="Edit Profile" onAction="#handleEditProfile"
+                        styleClass="btn-primary" visible="false" managed="false"/>
+                <Button fx:id="addFriendBtn" text="Add Friend" onAction="#handleAddFriend"
+                        styleClass="btn-secondary" visible="false" managed="false"/>
+            </HBox>
+        </VBox>
+
+        <Separator maxWidth="600"/>
+
+        <Label text="Posts" styleClass="section-title" maxWidth="600"/>
+
+        <!-- User's Posts -->
+        <VBox fx:id="userPostsContainer" spacing="15" alignment="TOP_CENTER" maxWidth="600">
+            <Label fx:id="noPostsLabel" text="No posts yet."
+                   style="-fx-text-fill: #65676B; -fx-font-size: 14px; -fx-padding: 20 0;"/>
+        </VBox>
+    </VBox>
+</ScrollPane>

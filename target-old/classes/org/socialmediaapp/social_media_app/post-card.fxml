@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<VBox styleClass="post-card" spacing="10" maxWidth="600"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.socialmediaapp.social_media_app.controller.PostCardController">
+
+    <!-- Post Header -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <StackPane minWidth="40" minHeight="40" maxWidth="40" maxHeight="40">
+            <Circle radius="20" fill="#1877F2"/>
+            <ImageView fx:id="avatarImageView" fitWidth="40" fitHeight="40" preserveRatio="true">
+                <clip><Circle centerX="20" centerY="20" radius="20"/></clip>
+            </ImageView>
+            <Label fx:id="avatarInitial" text="U"
+                   style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;"/>
+        </StackPane>
+        <VBox spacing="2">
+            <Label fx:id="usernameLabel" text="Username" styleClass="post-username"/>
+            <HBox spacing="8">
+                <Label fx:id="dateLabel" text="" styleClass="post-date"/>
+                <Label fx:id="privacyLabel" text="" styleClass="post-privacy"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <!-- Post Text -->
+    <Label fx:id="postTextLabel" text="" styleClass="post-text" wrapText="true"/>
+
+    <!-- Stats -->
+    <HBox styleClass="post-stats" spacing="15">
+        <Label fx:id="likesCountLabel" text="0 Likes"/>
+        <Label fx:id="commentsCountLabel" text="0 Comments"/>
+    </HBox>
+
+    <!-- Action Buttons -->
+    <HBox styleClass="post-actions" spacing="0" alignment="CENTER">
+        <Button fx:id="likeBtn" text="Like" onAction="#handleLike"
+                styleClass="post-action-btn" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Button text="Comment" onAction="#handleToggleComments"
+                styleClass="post-action-btn" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+    </HBox>
+
+    <!-- Comments Section (togglable) -->
+    <VBox fx:id="commentsSection" spacing="8" managed="false" visible="false">
+        <VBox fx:id="commentsContainer" spacing="6"/>
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <TextField fx:id="commentInput" promptText="Write a comment..."
+                       styleClass="comment-input" HBox.hgrow="ALWAYS"/>
+            <Button text="Send" onAction="#handleAddComment" styleClass="btn-primary"
+                    style="-fx-font-size: 12px; -fx-padding: 8 14;"/>
+        </HBox>
+    </VBox>
+</VBox>

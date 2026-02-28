@@ -7,7 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import org.socialmediaapp.social_media_app.HelloApplication;
 import org.socialmediaapp.social_media_app.domain.Post;
 import org.socialmediaapp.social_media_app.domain.UserDTO;
@@ -16,6 +20,7 @@ import org.socialmediaapp.social_media_app.service.NotificationService;
 import org.socialmediaapp.social_media_app.service.PostService;
 import org.socialmediaapp.social_media_app.util.SessionManager;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -32,7 +37,12 @@ public class NewsFeedController {
     private VBox postsContainer;
     @FXML
     private Label emptyFeedLabel;
+    @FXML
+    private HBox imagePreviewBox;
+    @FXML
+    private ImageView imagePreview;
 
+    private File selectedImageFile;
     private final PostService postService = new PostService();
     private final NotificationService notificationService = new NotificationService();
     private final FriendService friendsService = new FriendService();
@@ -45,14 +55,42 @@ public class NewsFeedController {
     }
 
     @FXML
+    private void handleAddImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select an Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
+        );
+        File file = fileChooser.showOpenDialog(postTextArea.getScene().getWindow());
+        if (file != null) {
+            selectedImageFile = file;
+            Image img = new Image(file.toURI().toString(), 300, 150, true, true);
+            imagePreview.setImage(img);
+            imagePreviewBox.setVisible(true);
+            imagePreviewBox.setManaged(true);
+        }
+    }
+
+    @FXML
+    private void handleRemoveImage() {
+        selectedImageFile = null;
+        imagePreview.setImage(null);
+        imagePreviewBox.setVisible(false);
+        imagePreviewBox.setManaged(false);
+    }
+
+    @FXML
     private void handleCreatePost() {
         String text = postTextArea.getText() != null ? postTextArea.getText().trim() : "";
-        if (text.isEmpty())
+        String imagePath = selectedImageFile != null ? selectedImageFile.getAbsolutePath() : "";
+
+        // Must have at least text or image
+        if (text.isEmpty() && imagePath.isEmpty())
             return;
 
         int userId = SessionManager.getInstance().getCurrentUserId();
 
-        int postID = postService.createPost(userId, text, "", privacyCombo.getValue());
+        int postID = postService.createPost(userId, text, imagePath, privacyCombo.getValue());
         if (postID != -1) {
             // create notification
             if (!privacyCombo.getValue().equals("Private")) {
@@ -66,6 +104,7 @@ public class NewsFeedController {
             }
 
             postTextArea.clear();
+            handleRemoveImage();
             loadFeed();
         }
     }

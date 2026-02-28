@@ -32,6 +32,11 @@
     <!-- Post Text -->
     <Label fx:id="postTextLabel" text="" styleClass="post-text" wrapText="true"/>
 
+    <!-- Post Image -->
+    <ImageView fx:id="postImageView" fitWidth="560" preserveRatio="true"
+               managed="false" visible="false"
+               style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);"/>
+
     <!-- Stats -->
     <HBox styleClass="post-stats" spacing="15">
         <Label fx:id="likesCountLabel" text="0 Likes"/>

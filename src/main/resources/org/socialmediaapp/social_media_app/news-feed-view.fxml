@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <ScrollPane fitToWidth="true" styleClass="scroll-pane"
@@ -21,7 +22,17 @@
                       prefRowCount="3" wrapText="true"
                       style="-fx-background-color: #F0F2F5; -fx-border-color: #DADDE1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;"/>
 
+            <!-- Image Preview -->
+            <HBox fx:id="imagePreviewBox" spacing="10" alignment="CENTER_LEFT" managed="false" visible="false">
+                <ImageView fx:id="imagePreview" fitHeight="150" preserveRatio="true"
+                           style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);"/>
+                <Button text="✕ Remove" onAction="#handleRemoveImage" styleClass="btn-danger"
+                        style="-fx-font-size: 12px; -fx-padding: 6 12;"/>
+            </HBox>
+
             <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="📷 Add Photo" onAction="#handleAddImage"
+                        style="-fx-background-color: #E4E6EB; -fx-background-radius: 8; -fx-padding: 8 14; -fx-cursor: hand; -fx-font-size: 13px;"/>
                 <Label text="Privacy:" style="-fx-text-fill: #65676B;"/>
                 <ComboBox fx:id="privacyCombo" prefWidth="130"/>
                 <Region HBox.hgrow="ALWAYS"/>

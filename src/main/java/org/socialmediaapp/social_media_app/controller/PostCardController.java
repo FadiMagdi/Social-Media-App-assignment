@@ -39,6 +39,8 @@ public class PostCardController {
     @FXML
     private Label postTextLabel;
     @FXML
+    private ImageView postImageView;
+    @FXML
     private Label likesCountLabel;
     @FXML
     private Label commentsCountLabel;
@@ -94,6 +96,11 @@ public class PostCardController {
         } else {
             postTextLabel.setVisible(false);
             postTextLabel.setManaged(false);
+        }
+
+        // Post image
+        if (post.getImagePath() != null && !post.getImagePath().isEmpty()) {
+            loadPostImage(post.getImagePath());
         }
 
         // Counts
@@ -167,6 +174,24 @@ public class PostCardController {
             label.getStyleClass().add("comment-text");
             label.setStyle("-fx-padding: 8; -fx-background-color: #F0F2F5; -fx-background-radius: 12;");
             commentsContainer.getChildren().add(label);
+        }
+    }
+
+    private void loadPostImage(String path) {
+        try {
+            Image image;
+            if (path.startsWith("file:") || path.startsWith("http")) {
+                image = new Image(path, 560, 0, true, true);
+            } else {
+                image = new Image(new File(path).toURI().toString(), 560, 0, true, true);
+            }
+            if (!image.isError()) {
+                postImageView.setImage(image);
+                postImageView.setVisible(true);
+                postImageView.setManaged(true);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading post image: " + e.getMessage());
         }
     }
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.socialmediaapp.social_media_app.controller.FriendsController">
+
+    <padding>
+        <Insets top="10" bottom="20" left="20" right="20"/>
+    </padding>
+
+    <Label text="Friends" styleClass="section-title"/>
+
+    <TabPane tabClosingPolicy="UNAVAILABLE">
+
+        <Tab text="My Friends">
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+                <VBox fx:id="friendsListContainer" spacing="8">
+                    <padding>
+                        <Insets top="10" bottom="10" left="5" right="5"/>
+                    </padding>
+                    <Label fx:id="noFriendsLabel" text="You don't have any friends yet."
+                           style="-fx-text-fill: #65676B; -fx-font-size: 14px; -fx-padding: 20 0;"/>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+        <Tab fx:id="requestsTab" text="Friend Requests">
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+                <VBox fx:id="requestsListContainer" spacing="8">
+                    <padding>
+                        <Insets top="10" bottom="10" left="5" right="5"/>
+                    </padding>
+                    <Label fx:id="noRequestsLabel" text="No pending friend requests."
+                           style="-fx-text-fill: #65676B; -fx-font-size: 14px; -fx-padding: 20 0;"/>
+                </VBox>
+            </ScrollPane>
+        </Tab>
+
+    </TabPane>
+</VBox>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true" styleClass="scroll-pane"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.socialmediaapp.social_media_app.controller.NewsFeedController">
+
+    <VBox spacing="15" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="10" bottom="20" left="40" right="40"/>
+        </padding>
+
+        <!-- Create Post Section -->
+        <VBox styleClass="create-post-box" spacing="12" maxWidth="600">
+            <Label text="Create Post" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <TextArea fx:id="postTextArea" promptText="What's on your mind?"
+                      prefRowCount="3" wrapText="true"
+                      style="-fx-background-color: #F0F2F5; -fx-border-color: #DADDE1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Privacy:" style="-fx-text-fill: #65676B;"/>
+                <ComboBox fx:id="privacyCombo" prefWidth="130"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Post" onAction="#handleCreatePost" styleClass="btn-primary"/>
+            </HBox>
+        </VBox>
+
+        <Separator maxWidth="600"/>
+
+        <!-- Posts Feed -->
+        <VBox fx:id="postsContainer" spacing="15" alignment="TOP_CENTER" maxWidth="600">
+            <Label fx:id="emptyFeedLabel"
+                   text="No posts yet. Be the first to share something!"
+                   style="-fx-text-fill: #65676B; -fx-font-size: 15px; -fx-padding: 40 0;"/>
+        </VBox>
+    </VBox>
+</ScrollPane>
