@@ -4,58 +4,39 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import org.socialmediaapp.social_media_app.dao.UserDao;
-import org.socialmediaapp.social_media_app.database.DatabaseConnection;
 import org.socialmediaapp.social_media_app.domain.User;
+import org.socialmediaapp.social_media_app.service.UserService;
 import org.socialmediaapp.social_media_app.util.SceneManager;
 import org.socialmediaapp.social_media_app.util.SessionManager;
 
-import java.sql.Connection;
-
+/**
+ * Controller for login-view.fxml.
+ * Uses UserService for authentication.
+ */
 public class LoginController {
 
-    @FXML
-    private TextField emailField;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private Label errorLabel;
 
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Label errorLabel;
+    private final UserService userService = new UserService();
 
     @FXML
     private void handleLogin() {
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
 
-        // Validation
         if (email.isEmpty() || password.isEmpty()) {
             showError("Please fill in all fields.");
             return;
         }
 
-        try {
-            Connection conn = DatabaseConnection.getDBConnection();
-            UserDao userDao = new UserDao(conn);
-            User user = userDao.getUserByEmail("'" + email + "'");
-
-            if (user == null) {
-                showError("No account found with this email.");
-                return;
-            }
-
-            if (!user.getPassword().equals(password)) {
-                showError("Incorrect password.");
-                return;
-            }
-
-            // Login success
+        User user = userService.login(email, password);
+        if (user != null) {
             SessionManager.getInstance().setCurrentUser(user);
             SceneManager.getInstance().showMain();
-
-        } catch (Exception e) {
-            showError("Login failed. Please try again.");
-            e.printStackTrace();
+        } else {
+            showError("Invalid email or password.");
         }
     }
 

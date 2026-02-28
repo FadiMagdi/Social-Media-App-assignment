@@ -5,198 +5,175 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import org.socialmediaapp.social_media_app.dao.FriendSystemDao;
-import org.socialmediaapp.social_media_app.dao.UserDao;
-import org.socialmediaapp.social_media_app.database.DatabaseConnection;
-import org.socialmediaapp.social_media_app.domain.friendRequest;
-import org.socialmediaapp.social_media_app.domain.userDTO;
+import javafx.scene.shape.Circle;
+import org.socialmediaapp.social_media_app.domain.FriendRequest;
+import org.socialmediaapp.social_media_app.domain.UserDTO;
+import org.socialmediaapp.social_media_app.service.FriendService;
 import org.socialmediaapp.social_media_app.util.SceneManager;
 import org.socialmediaapp.social_media_app.util.SessionManager;
 
-import java.sql.Connection;
-import java.text.SimpleDateFormat;
+import java.io.File;
 import java.util.List;
 
+/**
+ * Controller for friends-view.fxml.
+ * Uses FriendService for friends list and requests.
+ */
 public class FriendsController {
 
-    @FXML private TabPane friendsTabPane;
     @FXML private VBox friendsListContainer;
     @FXML private VBox requestsListContainer;
     @FXML private Label noFriendsLabel;
     @FXML private Label noRequestsLabel;
     @FXML private Tab requestsTab;
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+    private final FriendService friendService = new FriendService();
 
     @FXML
     public void initialize() {
         loadFriends();
-        loadFriendRequests();
+        loadRequests();
     }
 
     private void loadFriends() {
         friendsListContainer.getChildren().clear();
+        int userId = SessionManager.getInstance().getCurrentUserId();
+        List<UserDTO> friends = friendService.getFriends(userId);
 
-        try {
-            Connection conn = DatabaseConnection.getDBConnection();
-            UserDao userDao = new UserDao(conn);
-            FriendSystemDao friendDao = new FriendSystemDao(conn, userDao);
-
-            Integer currentUserId = SessionManager.getInstance().getCurrentUserID();
-            List<userDTO> friends = friendDao.getUserFriends(currentUserId);
-
-            if (friends == null || friends.isEmpty()) {
-                friendsListContainer.getChildren().add(noFriendsLabel);
-            } else {
-                noFriendsLabel.setVisible(false);
-                for (userDTO friend : friends) {
-                    friendsListContainer.getChildren().add(createFriendCard(friend));
-                }
+        if (friends.isEmpty()) {
+            friendsListContainer.getChildren().add(noFriendsLabel);
+        } else {
+            noFriendsLabel.setVisible(false);
+            for (UserDTO friend : friends) {
+                friendsListContainer.getChildren().add(createFriendItem(friend));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            friendsListContainer.getChildren().add(new Label("Failed to load friends."));
         }
     }
 
-    private void loadFriendRequests() {
+    private void loadRequests() {
         requestsListContainer.getChildren().clear();
+        int userId = SessionManager.getInstance().getCurrentUserId();
+        List<FriendRequest> requests = friendService.getFriendRequests(userId);
 
-        try {
-            Connection conn = DatabaseConnection.getDBConnection();
-            UserDao userDao = new UserDao(conn);
-            FriendSystemDao friendDao = new FriendSystemDao(conn, userDao);
-
-            Integer currentUserId = SessionManager.getInstance().getCurrentUserID();
-            List<friendRequest> requests = friendDao.getUserFriendRequests(currentUserId);
-
-            if (requests == null || requests.isEmpty()) {
-                requestsListContainer.getChildren().add(noRequestsLabel);
-                requestsTab.setText("Friend Requests");
-            } else {
-                noRequestsLabel.setVisible(false);
-                requestsTab.setText("Friend Requests (" + requests.size() + ")");
-                for (friendRequest request : requests) {
-                    requestsListContainer.getChildren().add(createRequestCard(request));
-                }
+        if (requests.isEmpty()) {
+            requestsListContainer.getChildren().add(noRequestsLabel);
+            requestsTab.setText("Friend Requests");
+        } else {
+            noRequestsLabel.setVisible(false);
+            requestsTab.setText("Friend Requests (" + requests.size() + ")");
+            for (FriendRequest req : requests) {
+                requestsListContainer.getChildren().add(createRequestItem(req));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            requestsListContainer.getChildren().add(new Label("Failed to load requests."));
         }
     }
 
-    private HBox createFriendCard(userDTO friend) {
-        HBox card = new HBox(12);
-        card.getStyleClass().add("friend-card");
-        card.setAlignment(Pos.CENTER_LEFT);
+    private HBox createFriendItem(UserDTO friend) {
+        HBox item = new HBox(12);
+        item.getStyleClass().add("friend-card");
+        item.setAlignment(Pos.CENTER_LEFT);
 
-        // Avatar
-        VBox avatar = new VBox();
-        avatar.setAlignment(Pos.CENTER);
-        avatar.setMinSize(40, 40);
-        avatar.setMaxSize(40, 40);
-        avatar.setStyle("-fx-background-color: #1877F2; -fx-background-radius: 20;");
-        Label initial = new Label(friend.userName().substring(0, 1).toUpperCase());
-        initial.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;");
-        avatar.getChildren().add(initial);
+        item.getChildren().add(createAvatar(friend));
 
-        // Name
-        Label nameLabel = new Label(friend.userName());
-        nameLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
+        Label nameLabel = new Label(friend.name());
+        nameLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1C1E21;");
+        nameLabel.setMinWidth(Region.USE_PREF_SIZE);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // View Profile Button
         Button viewBtn = new Button("View Profile");
         viewBtn.getStyleClass().add("btn-outline");
         viewBtn.setOnAction(e -> {
-            ProfileController controller = SceneManager.getInstance()
+            ProfileController ctrl = SceneManager.getInstance()
                     .loadContentAndGetController("profile-view.fxml");
-            if (controller != null) {
-                controller.loadProfile(friend.userID());
-            }
+            if (ctrl != null) ctrl.loadProfile(friend.id());
         });
 
-        card.getChildren().addAll(avatar, nameLabel, spacer, viewBtn);
-        return card;
+        item.getChildren().addAll(nameLabel, spacer, viewBtn);
+        return item;
     }
 
-    private HBox createRequestCard(friendRequest request) {
-        HBox card = new HBox(12);
-        card.getStyleClass().add("friend-card");
-        card.setAlignment(Pos.CENTER_LEFT);
+    private HBox createRequestItem(FriendRequest req) {
+        HBox item = new HBox(12);
+        item.getStyleClass().add("friend-card");
+        item.setAlignment(Pos.CENTER_LEFT);
 
-        // Avatar
-        VBox avatar = new VBox();
-        avatar.setAlignment(Pos.CENTER);
-        avatar.setMinSize(40, 40);
-        avatar.setMaxSize(40, 40);
-        avatar.setStyle("-fx-background-color: #42B72A; -fx-background-radius: 20;");
-        Label initial = new Label(request.getSourceUser().userName().substring(0, 1).toUpperCase());
-        initial.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;");
-        avatar.getChildren().add(initial);
+        item.getChildren().add(createAvatar(req.getSender()));
 
-        // Info
-        VBox info = new VBox(2);
-        Label nameLabel = new Label(request.getSourceUser().userName());
-        nameLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
-        Label dateLabel = new Label("Sent: " + (request.getSendDate() != null ?
-                dateFormat.format(request.getSendDate()) : ""));
-        dateLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #65676B;");
-        info.getChildren().addAll(nameLabel, dateLabel);
+        Label nameLabel = new Label(req.getSender().name());
+        nameLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1C1E21;");
+        nameLabel.setMinWidth(Region.USE_PREF_SIZE);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Accept Button
         Button acceptBtn = new Button("Accept");
         acceptBtn.getStyleClass().add("btn-secondary");
-        acceptBtn.setOnAction(e -> handleAcceptRequest(request, card));
+        acceptBtn.setOnAction(e -> {
+            if (friendService.acceptFriendRequest(req)) {
+                loadFriends();
+                loadRequests();
+            }
+        });
 
-        // Ignore Button
         Button ignoreBtn = new Button("Ignore");
         ignoreBtn.getStyleClass().add("btn-danger");
-        ignoreBtn.setOnAction(e -> handleIgnoreRequest(request, card));
+        ignoreBtn.setOnAction(e -> {
+            if (friendService.ignoreFriendRequest(req.getId())) {
+                loadRequests();
+            }
+        });
 
-        card.getChildren().addAll(avatar, info, spacer, acceptBtn, ignoreBtn);
-        return card;
+        item.getChildren().addAll(nameLabel, spacer, acceptBtn, ignoreBtn);
+        return item;
     }
 
-    private void handleAcceptRequest(friendRequest request, HBox card) {
-        try {
-            Connection conn = DatabaseConnection.getDBConnection();
-            UserDao userDao = new UserDao(conn);
-            FriendSystemDao friendDao = new FriendSystemDao(conn, userDao);
+    private StackPane createAvatar(UserDTO user) {
+        StackPane avatar = new StackPane();
+        avatar.setMinSize(40, 40);
+        avatar.setMaxSize(40, 40);
 
-            boolean success = friendDao.acceptFriendRequest(request);
-            if (success) {
-                requestsListContainer.getChildren().remove(card);
-                loadFriends(); // Refresh friends list
+        Circle bg = new Circle(20);
+        bg.setStyle("-fx-fill: #1877F2;");
+        avatar.getChildren().add(bg);
+
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(40);
+        imageView.setFitHeight(40);
+        imageView.setPreserveRatio(true);
+        Circle clip = new Circle(20, 20, 20);
+        imageView.setClip(clip);
+        avatar.getChildren().add(imageView);
+
+        Label initial = new Label(user.name().substring(0, 1).toUpperCase());
+        initial.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;");
+        avatar.getChildren().add(initial);
+
+        if (user.profile() != null && user.profile().getImagePath() != null
+                && !user.profile().getImagePath().isEmpty()) {
+            try {
+                String path = user.profile().getImagePath();
+                Image image;
+                if (path.startsWith("file:") || path.startsWith("http")) {
+                    image = new Image(path, 40, 40, true, true);
+                } else {
+                    image = new Image(new File(path).toURI().toString(), 40, 40, true, true);
+                }
+                if (!image.isError()) {
+                    imageView.setImage(image);
+                    initial.setText("");
+                }
+            } catch (Exception e) {
+                // keep initial letter
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-    }
-
-    private void handleIgnoreRequest(friendRequest request, HBox card) {
-        try {
-            Connection conn = DatabaseConnection.getDBConnection();
-            UserDao userDao = new UserDao(conn);
-            FriendSystemDao friendDao = new FriendSystemDao(conn, userDao);
-
-            boolean success = friendDao.ignoreFriendRequest(request);
-            if (success) {
-                requestsListContainer.getChildren().remove(card);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return avatar;
     }
 }

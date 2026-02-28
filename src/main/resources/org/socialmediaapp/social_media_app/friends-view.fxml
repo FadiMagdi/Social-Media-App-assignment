@@ -14,9 +14,8 @@
 
     <Label text="Friends" styleClass="section-title"/>
 
-    <TabPane fx:id="friendsTabPane" tabClosingPolicy="UNAVAILABLE">
+    <TabPane tabClosingPolicy="UNAVAILABLE">
 
-        <!-- My Friends Tab -->
         <Tab text="My Friends">
             <ScrollPane fitToWidth="true" styleClass="scroll-pane">
                 <VBox fx:id="friendsListContainer" spacing="8">
@@ -29,7 +28,6 @@
             </ScrollPane>
         </Tab>
 
-        <!-- Friend Requests Tab -->
         <Tab fx:id="requestsTab" text="Friend Requests">
             <ScrollPane fitToWidth="true" styleClass="scroll-pane">
                 <VBox fx:id="requestsListContainer" spacing="8">
@@ -43,5 +41,4 @@
         </Tab>
 
     </TabPane>
-
 </VBox>

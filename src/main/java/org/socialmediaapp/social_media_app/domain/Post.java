@@ -4,148 +4,51 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A social media post with likes and comments.
+ */
 public class Post {
 
-    public userDTO postMaker;
-    public Date postDate;
-    public String postText;
-    private String image_path;
-    private Integer postID;
+    private int id;
+    private UserDTO author;
+    private String text;
+    private String imagePath;
+    private Date date;
     private String privacy;
-    public List<Like> postLikes;
-    public List<Comment> postComments;
-    public Post(userDTO postMaker, Date postDate, String image_path,String postText,String privacy) {
-        this.postMaker = postMaker;
-        this.postDate = postDate;
-        this.image_path = image_path;
-        this.postText = postText;
-        this.privacy = privacy;
-        postLikes = new ArrayList<Like>();
-        postComments = new ArrayList<Comment>();
-    }
+    private List<Like> likes = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
-    public Post(userDTO postMaker, Date postDate, String image_path, Integer postID, List<Like> postLikes, List<Comment> postComments,String postText,String privacy) {
-        this.postMaker = postMaker;
-        this.postDate = postDate;
-        this.image_path = image_path;
-        this.postText = postText;
-        this.postID = postID;
-        this.privacy = privacy;
-        this.postLikes = postLikes;
-        this.postComments = postComments;
+    public Post() {}
 
-    }
-
-    public String getPrivacy() {
-        return privacy;
-    }
-
-    public void setPrivacy(String privacy) {
+    public Post(UserDTO author, String text, String imagePath, Date date, String privacy) {
+        this.author = author;
+        this.text = text;
+        this.imagePath = imagePath;
+        this.date = date;
         this.privacy = privacy;
     }
 
-    public String getPostText() {
-        return postText;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setPostText(String postText) {
-        this.postText = postText;
-    }
+    public UserDTO getAuthor() { return author; }
+    public void setAuthor(UserDTO author) { this.author = author; }
 
-    public userDTO getPostMaker() {
-        return postMaker;
-    }
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
 
-    public void setPostMaker(userDTO postMaker) {
-        this.postMaker = postMaker;
-    }
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 
-    public Date getPostDate() {
-        return postDate;
-    }
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date; }
 
-    public void setPostDate(Date postDate) {
-        this.postDate = postDate;
-    }
+    public String getPrivacy() { return privacy; }
+    public void setPrivacy(String privacy) { this.privacy = privacy; }
 
-    public String getImage_path() {
-        return image_path;
-    }
+    public List<Like> getLikes() { return likes; }
+    public void setLikes(List<Like> likes) { this.likes = likes; }
 
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
-    }
-
-    public Integer getPostID() {
-        return postID;
-    }
-
-    public void setPostID(Integer postID) {
-        this.postID = postID;
-    }
-
-    public List<Like> getPostLikes() {
-        return postLikes;
-    }
-
-    public void setPostLikes(List<Like> postLikes) {
-        this.postLikes = postLikes;
-    }
-
-    public List<Comment> getPostComments() {
-        return postComments;
-    }
-
-    public void setPostComments(List<Comment> postComments) {
-        this.postComments = postComments;
-    }
-
-    public void addLike(Integer userID,String userName,Profile userProfile){
-        userDTO liking = new userDTO(userID,userName,userProfile);
-        this.postLikes.add(new Like(liking));
-    }
-
-    public void removeLike(Integer userID) {
-
-
-        Like target = null;
-        for (int i = 0; i < postLikes.size(); i++) {
-            if (postLikes.get(i).userMadeLike.userID().equals(userID)) {
-                target = postLikes.get(i);
-                break;
-            }
-
-
-        }
-        if ((target != null)) {
-            this.postLikes.remove(target);
-        } else {
-            System.out.println("user did not like the post");
-        }
-
-    }
-
-
-    public void addComment(Comment newComment){
-        this.postComments.add(newComment);
-    }
-
-
-    public void removeComment(Integer commentID){
-
-        Comment target = null;
-        for(int i=0;i<this.postComments.size();i++){
-           Comment currentComment = this.postComments.get(i);
-            if(commentID.equals(currentComment.getCommentID())){
-                target = currentComment;
-            }
-            break;
-        }
-        if(target != null){
-            this.postComments.remove(target);
-        }else{
-            System.out.println("Comment does not exist");
-        }
-    }
-
+    public List<Comment> getComments() { return comments; }
+    public void setComments(List<Comment> comments) { this.comments = comments; }
 }

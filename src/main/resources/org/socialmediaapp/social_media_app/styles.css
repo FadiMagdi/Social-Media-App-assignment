@@ -4,21 +4,7 @@
     -fx-font-size: 14px;
 }
 
-/* ===== Color Variables ===== */
-* {
-    -primary-color: #1877F2;
-    -primary-hover: #1565C0;
-    -secondary-color: #42B72A;
-    -background-color: #F0F2F5;
-    -card-color: #FFFFFF;
-    -text-primary: #1C1E21;
-    -text-secondary: #65676B;
-    -border-color: #DADDE1;
-    -danger-color: #FA3E3E;
-    -success-color: #42B72A;
-}
-
-/* ===== Login & Register Screens ===== */
+/* ===== Login & Register ===== */
 .auth-container {
     -fx-background-color: #F0F2F5;
     -fx-padding: 40;
@@ -63,6 +49,12 @@
     -fx-background-color: #FFFFFF;
 }
 
+.error-label {
+    -fx-text-fill: #FA3E3E;
+    -fx-font-size: 12px;
+}
+
+/* ===== Buttons ===== */
 .btn-primary {
     -fx-background-color: #1877F2;
     -fx-text-fill: white;
@@ -71,7 +63,6 @@
     -fx-background-radius: 8;
     -fx-padding: 12 20;
     -fx-cursor: hand;
-    -fx-pref-height: 44;
 }
 
 .btn-primary:hover {
@@ -130,18 +121,6 @@
 
 .link-text:hover {
     -fx-underline: true;
-}
-
-.error-label {
-    -fx-text-fill: #FA3E3E;
-    -fx-font-size: 12px;
-}
-
-/* ===== Separator ===== */
-.auth-separator {
-    -fx-border-color: #DADDE1;
-    -fx-border-width: 0 0 1 0;
-    -fx-padding: 5 0;
 }
 
 /* ===== Main Shell ===== */
@@ -206,13 +185,11 @@
     -fx-background-color: transparent;
     -fx-text-fill: #1C1E21;
     -fx-font-size: 15px;
-    -fx-font-weight: normal;
     -fx-padding: 12 16;
     -fx-alignment: center-left;
     -fx-background-radius: 8;
     -fx-cursor: hand;
     -fx-pref-width: 200;
-    -fx-graphic-text-gap: 12;
 }
 
 .sidebar-btn:hover {
@@ -223,10 +200,6 @@
     -fx-background-color: #E7F3FF;
     -fx-text-fill: #1877F2;
     -fx-font-weight: bold;
-}
-
-.sidebar-separator {
-    -fx-padding: 8 0;
 }
 
 /* ===== Content Area ===== */
@@ -242,11 +215,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
     -fx-padding: 16;
     -fx-spacing: 10;
-}
-
-.post-header {
-    -fx-spacing: 10;
-    -fx-alignment: center-left;
 }
 
 .post-username {
@@ -268,11 +236,6 @@
 .post-text {
     -fx-font-size: 14px;
     -fx-text-fill: #1C1E21;
-    -fx-wrap-text: true;
-}
-
-.post-image {
-    -fx-background-radius: 8;
 }
 
 .post-stats {
@@ -282,8 +245,6 @@
 }
 
 .post-actions {
-    -fx-spacing: 0;
-    -fx-alignment: center;
     -fx-border-color: #DADDE1;
     -fx-border-width: 1 0;
     -fx-padding: 4 0;
@@ -303,32 +264,10 @@
     -fx-background-color: #F0F2F5;
 }
 
-.post-action-btn-liked {
-    -fx-text-fill: #1877F2;
-}
-
-/* ===== Comments Section ===== */
-.comment-box {
-    -fx-background-color: #F0F2F5;
-    -fx-background-radius: 18;
-    -fx-padding: 8 12;
-    -fx-spacing: 2;
-}
-
-.comment-username {
-    -fx-font-weight: bold;
-    -fx-font-size: 13px;
-    -fx-text-fill: #1C1E21;
-}
-
+/* ===== Comments ===== */
 .comment-text {
     -fx-font-size: 13px;
     -fx-text-fill: #1C1E21;
-}
-
-.comment-date {
-    -fx-font-size: 11px;
-    -fx-text-fill: #65676B;
 }
 
 .comment-input {
@@ -339,7 +278,7 @@
     -fx-prompt-text-fill: #65676B;
 }
 
-/* ===== Create Post Box ===== */
+/* ===== Create Post ===== */
 .create-post-box {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 10;
@@ -348,21 +287,7 @@
     -fx-spacing: 12;
 }
 
-.create-post-input {
-    -fx-background-color: #F0F2F5;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
-    -fx-padding: 10 16;
-    -fx-prompt-text-fill: #65676B;
-    -fx-pref-height: 44;
-}
-
-.create-post-actions {
-    -fx-spacing: 10;
-    -fx-alignment: center-left;
-}
-
-/* ===== Profile Section ===== */
+/* ===== Profile ===== */
 .profile-header {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 10;
@@ -370,13 +295,6 @@
     -fx-padding: 24;
     -fx-spacing: 15;
     -fx-alignment: center;
-}
-
-.profile-picture {
-    -fx-background-radius: 50;
-    -fx-border-radius: 50;
-    -fx-border-color: #DADDE1;
-    -fx-border-width: 3;
 }
 
 .profile-name {
@@ -388,14 +306,7 @@
 .profile-bio {
     -fx-font-size: 15px;
     -fx-text-fill: #65676B;
-    -fx-wrap-text: true;
     -fx-text-alignment: center;
-}
-
-.profile-stats {
-    -fx-spacing: 30;
-    -fx-alignment: center;
-    -fx-padding: 10 0;
 }
 
 .profile-stat-value {
@@ -409,7 +320,7 @@
     -fx-text-fill: #65676B;
 }
 
-/* ===== Friends List ===== */
+/* ===== Friends ===== */
 .friend-card {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 10;
@@ -423,35 +334,24 @@
     -fx-background-color: #F7F8FA;
 }
 
-/* ===== Notifications ===== */
-.notification-item {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 8;
-    -fx-padding: 12 16;
-    -fx-spacing: 10;
-    -fx-alignment: center-left;
-}
-
-.notification-item:hover {
-    -fx-background-color: #F0F2F5;
-}
-
-.notification-text {
-    -fx-font-size: 14px;
-    -fx-text-fill: #1C1E21;
-}
-
-.notification-date {
-    -fx-font-size: 12px;
-    -fx-text-fill: #65676B;
-}
-
-.notification-icon {
-    -fx-font-size: 18px;
+/* ===== Misc ===== */
+.section-title {
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
+    -fx-text-fill: #1C1E21;
+    -fx-padding: 0 0 10 0;
 }
 
-/* ===== Tab Pane Styling ===== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== Tab Pane ===== */
 .tab-pane > .tab-header-area > .headers-region > .tab {
     -fx-background-color: #F0F2F5;
     -fx-background-radius: 8 8 0 0;
@@ -465,43 +365,4 @@
 .tab-pane > .tab-header-area > .headers-region > .tab .tab-label {
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-}
-
-/* ===== ScrollPane ===== */
-.scroll-pane {
-    -fx-background-color: transparent;
-    -fx-background: transparent;
-}
-
-.scroll-pane > .viewport {
-    -fx-background-color: transparent;
-}
-
-/* ===== Dialog ===== */
-.dialog-pane {
-    -fx-background-color: #FFFFFF;
-    -fx-padding: 20;
-}
-
-.dialog-pane > .content {
-    -fx-spacing: 15;
-}
-
-/* ===== Misc ===== */
-.section-title {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1C1E21;
-    -fx-padding: 0 0 10 0;
-}
-
-.avatar-circle {
-    -fx-background-radius: 50;
-    -fx-border-radius: 50;
-}
-
-.privacy-combo {
-    -fx-background-color: #F0F2F5;
-    -fx-background-radius: 8;
-    -fx-padding: 6 12;
 }

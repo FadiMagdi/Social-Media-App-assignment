@@ -1,44 +1,40 @@
 package org.socialmediaapp.social_media_app.database;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+/**
+ * Singleton database connection manager.
+ */
 public class DatabaseConnection {
-    // implementing database connection using singleton design pattern
-    private static String constring = "jdbc:mysql://localhost:3306/social_media_app_db";
-    private static String username = "root";
-    private static String password = "root";
 
+    private static final String URL = "jdbc:mysql://localhost:3306/social_media_app_db";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
-    private static Connection connection = null;
+    private static Connection connection;
 
-
-
-
-
-    public static Connection getDBConnection(){
-
-        if( connection == null){
-            try{
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection= DriverManager.getConnection(constring , username, password);
-
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+    public static Connection getDBConnection() {
+        if (connection == null) {
+            try {
+                connection = DriverManager.getConnection(URL, USER, PASSWORD);
             } catch (SQLException e) {
+                System.err.println("Database connection failed: " + e.getMessage());
                 throw new RuntimeException(e);
             }
-
         }
         return connection;
     }
 
-
-    public static void CloseConnection(){
-        try{
-            if(connection != null){
+    public static void closeConnection() {
+        try {
+            if (connection != null) {
                 connection.close();
+                connection = null;
             }
         } catch (SQLException e) {
-            System.out.println("Database Connection failed to Terminate");
+            System.err.println("Failed to close connection: " + e.getMessage());
         }
     }
-
 }

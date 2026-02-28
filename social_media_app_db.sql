@@ -18,7 +18,7 @@ id INT auto_increment,
 user_id INT,
 
 bio Text,
-image_path varchar(50),
+image_path varchar(255),
 foreign key(user_id) references app_user(id),
 primary key(id,user_id)
 );
@@ -50,7 +50,7 @@ user_id INT,
 post_text Text,
 post_image_path varchar(50),
 post_date date,
-privacy varchar(10),
+privacy varchar(20),
 foreign key(user_id) references app_user(id) 
 
 

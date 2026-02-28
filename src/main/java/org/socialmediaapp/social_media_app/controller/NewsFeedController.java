@@ -8,127 +8,68 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import org.socialmediaapp.social_media_app.HelloApplication;
-import org.socialmediaapp.social_media_app.dao.PostManagementDao;
-import org.socialmediaapp.social_media_app.dao.UserDao;
-import org.socialmediaapp.social_media_app.database.DatabaseConnection;
 import org.socialmediaapp.social_media_app.domain.Post;
-import org.socialmediaapp.social_media_app.domain.userDTO;
-import org.socialmediaapp.social_media_app.util.SceneManager;
+import org.socialmediaapp.social_media_app.service.PostService;
 import org.socialmediaapp.social_media_app.util.SessionManager;
 
-import java.io.File;
-import java.sql.Connection;
 import java.util.List;
 
+/**
+ * Controller for news-feed-view.fxml.
+ * Uses PostService for creating and loading posts.
+ */
 public class NewsFeedController {
 
     @FXML private TextArea postTextArea;
     @FXML private ComboBox<String> privacyCombo;
-    @FXML private Label selectedImageLabel;
     @FXML private VBox postsContainer;
     @FXML private Label emptyFeedLabel;
 
-    private String selectedImagePath = "";
+    private final PostService postService = new PostService();
 
     @FXML
     public void initialize() {
-        // Setup privacy combo
         privacyCombo.setItems(FXCollections.observableArrayList("Public", "Friends Only", "Private"));
         privacyCombo.setValue("Public");
-
-        // Load feed posts
-        loadFeedPosts();
+        loadFeed();
     }
 
     @FXML
     private void handleCreatePost() {
         String text = postTextArea.getText() != null ? postTextArea.getText().trim() : "";
-        String privacy = privacyCombo.getValue();
+        if (text.isEmpty()) return;
 
-        if (text.isEmpty() && selectedImagePath.isEmpty()) {
-            return; // Nothing to post
-        }
-
-        try {
-            Connection conn = DatabaseConnection.getDBConnection();
-            UserDao userDao = new UserDao(conn);
-            PostManagementDao postDao = new PostManagementDao(conn, userDao);
-
-            Integer currentUserId = SessionManager.getInstance().getCurrentUserID();
-            userDTO postMaker = userDao.getUserDTOByID(currentUserId);
-
-            Post newPost = new Post(
-                    postMaker,
-                    new java.sql.Date(System.currentTimeMillis()),
-                    selectedImagePath,
-                    text,
-                    privacy
-            );
-
-            boolean success = postDao.addPosts(newPost);
-            if (success) {
-                postTextArea.clear();
-                selectedImagePath = "";
-                selectedImageLabel.setText("");
-                loadFeedPosts();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        int userId = SessionManager.getInstance().getCurrentUserId();
+        boolean success = postService.createPost(userId, text, "", privacyCombo.getValue());
+        if (success) {
+            postTextArea.clear();
+            loadFeed();
         }
     }
 
-    @FXML
-    private void handleAddImage() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Image");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
-        );
-        File file = fileChooser.showOpenDialog(SceneManager.getInstance().getPrimaryStage());
-        if (file != null) {
-            selectedImagePath = file.getAbsolutePath();
-            selectedImageLabel.setText(file.getName());
-        }
-    }
-
-    private void loadFeedPosts() {
+    private void loadFeed() {
         postsContainer.getChildren().clear();
+        int userId = SessionManager.getInstance().getCurrentUserId();
+        List<Post> posts = postService.getFeedPosts(userId);
 
-        try {
-            Connection conn = DatabaseConnection.getDBConnection();
-            UserDao userDao = new UserDao(conn);
-            PostManagementDao postDao = new PostManagementDao(conn, userDao);
-
-            Integer currentUserId = SessionManager.getInstance().getCurrentUserID();
-            List<Post> feedPosts = postDao.getPostsForUseFeed(currentUserId);
-
-            if (feedPosts == null || feedPosts.isEmpty()) {
-                postsContainer.getChildren().add(emptyFeedLabel);
-                emptyFeedLabel.setVisible(true);
-            } else {
-                emptyFeedLabel.setVisible(false);
-                for (Post post : feedPosts) {
-                    addPostCard(post);
+        if (posts.isEmpty()) {
+            emptyFeedLabel.setVisible(true);
+            postsContainer.getChildren().add(emptyFeedLabel);
+        } else {
+            emptyFeedLabel.setVisible(false);
+            for (Post post : posts) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(
+                        HelloApplication.class.getResource("post-card.fxml"));
+                    Parent card = loader.load();
+                    PostCardController ctrl = loader.getController();
+                    ctrl.setPost(post);
+                    postsContainer.getChildren().add(card);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            postsContainer.getChildren().add(new Label("Failed to load feed."));
-        }
-    }
-
-    private void addPostCard(Post post) {
-        try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("post-card.fxml"));
-            Parent postCard = loader.load();
-            PostCardController controller = loader.getController();
-            controller.setPost(post);
-            postsContainer.getChildren().add(postCard);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

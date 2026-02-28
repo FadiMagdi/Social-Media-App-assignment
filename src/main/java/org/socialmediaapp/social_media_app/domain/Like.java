@@ -1,10 +1,18 @@
 package org.socialmediaapp.social_media_app.domain;
 
+/**
+ * A like on a post.
+ */
 public class Like {
 
-    public userDTO userMadeLike;
+    private UserDTO user;
 
-    public Like(userDTO userMadeLike) {
-        this.userMadeLike = userMadeLike;
+    public Like() {}
+
+    public Like(UserDTO user) {
+        this.user = user;
     }
+
+    public UserDTO getUser() { return user; }
+    public void setUser(UserDTO user) { this.user = user; }
 }

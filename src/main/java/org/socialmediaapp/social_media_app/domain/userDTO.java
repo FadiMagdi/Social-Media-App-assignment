@@ -1,4 +1,3 @@
 package org.socialmediaapp.social_media_app.domain;
 
-public record userDTO(Integer userID , String userName, Profile userProfile) {
-}
+public record UserDTO(int id, String name, Profile profile) {}

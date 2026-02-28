@@ -4,34 +4,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane fx:id="mainBorderPane" styleClass="main-container"
+<BorderPane styleClass="main-container"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.socialmediaapp.social_media_app.controller.MainController">
 
     <!-- TOP BAR -->
     <top>
         <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="15">
-            <!-- Logo -->
             <Label text="Social Media" styleClass="top-bar-logo"/>
-
-            <!-- Spacer -->
             <Region HBox.hgrow="ALWAYS"/>
 
-            <!-- Search -->
-            <TextField fx:id="searchField" promptText="Search users or posts..."
+            <TextField fx:id="searchField" promptText="Search..."
                        styleClass="search-field" onAction="#handleSearch"/>
             <Button text="Search" onAction="#handleSearch" styleClass="top-bar-btn"/>
 
-            <!-- Spacer -->
             <Region HBox.hgrow="ALWAYS"/>
 
-            <!-- Notifications Button -->
-            <Button fx:id="notifBtn" text="Notifications" onAction="#handleNotifications"
-                    styleClass="top-bar-btn"/>
-
-            <!-- Profile Button -->
-            <Button fx:id="profileBtn" text="My Profile" onAction="#handleMyProfile"
-                    styleClass="top-bar-btn"/>
+            <Button text="Notifications" onAction="#handleNotifications" styleClass="top-bar-btn"/>
+            <Button text="My Profile" onAction="#handleMyProfile" styleClass="top-bar-btn"/>
         </HBox>
     </top>
 
@@ -42,13 +32,11 @@
                 <Insets top="15" bottom="15" left="10" right="10"/>
             </padding>
 
-            <!-- User Info -->
             <Label fx:id="userNameLabel" text="Welcome"
                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1C1E21; -fx-padding: 0 0 10 16;"/>
 
             <Separator/>
 
-            <!-- Navigation Buttons -->
             <Button fx:id="feedBtn" text="   News Feed" onAction="#handleFeed"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
 
@@ -64,19 +52,16 @@
             <Button fx:id="searchBtn" text="   Search" onAction="#handleSearchPage"
                     styleClass="sidebar-btn" maxWidth="Infinity"/>
 
-            <!-- Spacer -->
             <Region VBox.vgrow="ALWAYS"/>
-
             <Separator/>
 
-            <!-- Logout -->
             <Button text="   Logout" onAction="#handleLogout"
                     styleClass="sidebar-btn" maxWidth="Infinity"
                     style="-fx-text-fill: #FA3E3E;"/>
         </VBox>
     </left>
 
-    <!-- CONTENT AREA (Center) - views will be loaded here -->
+    <!-- CONTENT AREA -->
     <center>
         <BorderPane fx:id="contentArea" styleClass="content-area">
             <padding>
@@ -84,5 +69,4 @@
             </padding>
         </BorderPane>
     </center>
-
 </BorderPane>

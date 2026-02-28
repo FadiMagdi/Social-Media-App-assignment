@@ -5,13 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import org.socialmediaapp.social_media_app.domain.User;
 import org.socialmediaapp.social_media_app.util.SceneManager;
 import org.socialmediaapp.social_media_app.util.SessionManager;
 
+/**
+ * Controller for main-view.fxml (the main shell with sidebar + content area).
+ */
 public class MainController {
 
-    @FXML private BorderPane mainBorderPane;
     @FXML private BorderPane contentArea;
     @FXML private TextField searchField;
     @FXML private Label userNameLabel;
@@ -20,19 +21,12 @@ public class MainController {
     @FXML private Button friendsBtn;
     @FXML private Button notificationsBtn;
     @FXML private Button searchBtn;
-    @FXML private Button notifBtn;
-    @FXML private Button profileBtn;
 
     @FXML
     public void initialize() {
-        // Set the content pane in SceneManager for inner navigation
         SceneManager.getInstance().setMainContentPane(contentArea);
-
-        // Set welcome message
-        User currentUser = SessionManager.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            userNameLabel.setText("Hi, " + currentUser.getUserName());
-        }
+        String name = SessionManager.getInstance().getCurrentUser().getName();
+        userNameLabel.setText("Hi, " + name);
 
         // Load News Feed by default
         handleFeed();
@@ -40,39 +34,39 @@ public class MainController {
 
     @FXML
     private void handleFeed() {
-        clearActiveStates();
+        clearActive();
         feedBtn.getStyleClass().add("sidebar-btn-active");
         SceneManager.getInstance().loadContent("news-feed-view.fxml");
     }
 
     @FXML
     private void handleMyProfile() {
-        clearActiveStates();
+        clearActive();
         myProfileBtn.getStyleClass().add("sidebar-btn-active");
-        ProfileController controller = SceneManager.getInstance()
+        ProfileController ctrl = SceneManager.getInstance()
                 .loadContentAndGetController("profile-view.fxml");
-        if (controller != null) {
-            controller.loadProfile(SessionManager.getInstance().getCurrentUserID());
+        if (ctrl != null) {
+            ctrl.loadProfile(SessionManager.getInstance().getCurrentUserId());
         }
     }
 
     @FXML
     private void handleFriends() {
-        clearActiveStates();
+        clearActive();
         friendsBtn.getStyleClass().add("sidebar-btn-active");
         SceneManager.getInstance().loadContent("friends-view.fxml");
     }
 
     @FXML
     private void handleNotifications() {
-        clearActiveStates();
+        clearActive();
         notificationsBtn.getStyleClass().add("sidebar-btn-active");
         SceneManager.getInstance().loadContent("notifications-view.fxml");
     }
 
     @FXML
     private void handleSearchPage() {
-        clearActiveStates();
+        clearActive();
         searchBtn.getStyleClass().add("sidebar-btn-active");
         SceneManager.getInstance().loadContent("search-view.fxml");
     }
@@ -81,12 +75,12 @@ public class MainController {
     private void handleSearch() {
         String query = searchField.getText().trim();
         if (!query.isEmpty()) {
-            clearActiveStates();
+            clearActive();
             searchBtn.getStyleClass().add("sidebar-btn-active");
-            SearchController controller = SceneManager.getInstance()
+            SearchController ctrl = SceneManager.getInstance()
                     .loadContentAndGetController("search-view.fxml");
-            if (controller != null) {
-                controller.performSearch(query);
+            if (ctrl != null) {
+                ctrl.performSearch(query);
             }
         }
     }
@@ -97,7 +91,7 @@ public class MainController {
         SceneManager.getInstance().showLogin();
     }
 
-    private void clearActiveStates() {
+    private void clearActive() {
         feedBtn.getStyleClass().remove("sidebar-btn-active");
         myProfileBtn.getStyleClass().remove("sidebar-btn-active");
         friendsBtn.getStyleClass().remove("sidebar-btn-active");

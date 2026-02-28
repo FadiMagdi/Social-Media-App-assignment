@@ -23,5 +23,4 @@
                    style="-fx-text-fill: #65676B; -fx-font-size: 14px; -fx-padding: 20 0;"/>
         </VBox>
     </ScrollPane>
-
 </VBox>

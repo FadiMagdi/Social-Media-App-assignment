@@ -1,27 +1,33 @@
 package org.socialmediaapp.social_media_app.domain;
 
+/**
+ * User profile with bio and image.
+ */
 public class Profile {
 
-    public String bio;
-    public String imagePath;
-    private Integer profileID;
+    private int id;
+    private String bio;
+    private String imagePath;
+
+    public Profile() {}
 
     public Profile(String bio, String imagePath) {
         this.bio = bio;
         this.imagePath = imagePath;
     }
 
-    public Profile(String bio, String imagePath, Integer profileID) {
+    public Profile(int id, String bio, String imagePath) {
+        this.id = id;
         this.bio = bio;
         this.imagePath = imagePath;
-        this.profileID = profileID;
     }
 
-    public Integer getProfileID() {
-        return profileID;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setProfileID(Integer profileID) {
-        this.profileID = profileID;
-    }
+    public String getBio() { return bio; }
+    public void setBio(String bio) { this.bio = bio; }
+
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 }

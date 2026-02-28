@@ -3,8 +3,7 @@ package org.socialmediaapp.social_media_app.util;
 import org.socialmediaapp.social_media_app.domain.User;
 
 /**
- * Manages the current logged-in user session.
- * Singleton pattern to keep track of who is logged in.
+ * Manages the current logged-in user session (Singleton).
  */
 public class SessionManager {
 
@@ -36,10 +35,7 @@ public class SessionManager {
         this.currentUser = null;
     }
 
-    public Integer getCurrentUserID() {
-        if (currentUser != null) {
-            return currentUser.getUserID();
-        }
-        return null;
+    public int getCurrentUserId() {
+        return currentUser != null ? currentUser.getId() : -1;
     }
 }

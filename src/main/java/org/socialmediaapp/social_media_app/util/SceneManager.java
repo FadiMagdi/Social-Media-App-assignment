@@ -10,15 +10,14 @@ import org.socialmediaapp.social_media_app.HelloApplication;
 import java.io.IOException;
 
 /**
- * Manages scene navigation throughout the application.
- * Handles switching between full scenes (login/register) and
- * loading content into the main shell's center area.
+ * Manages scene navigation throughout the application (Singleton).
+ * Handles full scene switches (login/register) and content loading into the main shell.
  */
 public class SceneManager {
 
     private static SceneManager instance;
     private Stage primaryStage;
-    private BorderPane mainContentPane; // The center pane of main-view
+    private BorderPane mainContentPane;
 
     private SceneManager() {}
 
@@ -37,44 +36,29 @@ public class SceneManager {
         return primaryStage;
     }
 
-    public void setMainContentPane(BorderPane mainContentPane) {
-        this.mainContentPane = mainContentPane;
+    public void setMainContentPane(BorderPane pane) {
+        this.mainContentPane = pane;
     }
 
-    public BorderPane getMainContentPane() {
-        return mainContentPane;
-    }
-
-    /**
-     * Switch the entire scene (used for login, register, main-view transitions).
-     */
+    /** Switch the entire scene (for login, register, main transitions). */
     public void switchScene(String fxmlFile, String title, double width, double height) {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
             Parent root = loader.load();
             Scene scene = new Scene(root, width, height);
             scene.getStylesheets().add(
-                    HelloApplication.class.getResource("styles.css").toExternalForm()
+                HelloApplication.class.getResource("styles.css").toExternalForm()
             );
             primaryStage.setTitle(title);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Failed to load scene: " + fxmlFile);
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Switch to full scene with default size.
-     */
-    public void switchScene(String fxmlFile, String title) {
-        switchScene(fxmlFile, title, 1000, 700);
-    }
-
-    /**
-     * Load a view into the main shell's content area (center of BorderPane).
-     */
+    /** Load a view into the main shell's content area (center of BorderPane). */
     public void loadContent(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
@@ -83,14 +67,12 @@ public class SceneManager {
                 mainContentPane.setCenter(content);
             }
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Failed to load content: " + fxmlFile);
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Load a view into the main shell's content area and return the controller.
-     */
+    /** Load a view into main content area and return its controller. */
     public <T> T loadContentAndGetController(String fxmlFile) {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(fxmlFile));
@@ -100,29 +82,22 @@ public class SceneManager {
             }
             return loader.getController();
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println("Failed to load content: " + fxmlFile);
+            e.printStackTrace();
             return null;
         }
     }
 
-    /**
-     * Navigate to Login screen.
-     */
+    // ── Navigation shortcuts ──
+
     public void showLogin() {
         switchScene("login-view.fxml", "Social Media App - Login", 500, 600);
     }
 
-    /**
-     * Navigate to Register screen.
-     */
     public void showRegister() {
-        switchScene("register-view.fxml", "Social Media App - Register", 500, 700);
+        switchScene("register-view.fxml", "Social Media App - Register", 500, 650);
     }
 
-    /**
-     * Navigate to Main shell (after login).
-     */
     public void showMain() {
         switchScene("main-view.fxml", "Social Media App", 1100, 750);
     }

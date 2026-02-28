@@ -2,54 +2,28 @@ package org.socialmediaapp.social_media_app.domain;
 
 import java.util.Date;
 
-public class friendRequest {
-    private userDTO sourceUser;
-    private Date sendDate;
-    private Integer requestID;
-    private Integer receiverID;
+public class FriendRequest {
 
-    public friendRequest(userDTO sourceUser, Date sendDate,Integer receiverID) {
-        this.sourceUser = sourceUser;
-        this.sendDate = sendDate;
-        this.receiverID = receiverID;
+    private int id;
+    private UserDTO sender;
+    private int receiverId;
+    private Date date;
+
+    public FriendRequest(UserDTO sender, int receiverId, Date date) {
+        this.sender = sender;
+        this.receiverId = receiverId;
+        this.date = date;
     }
 
-    public friendRequest(userDTO sourceUser, Date sendDate, Integer requestID,Integer receiverID) {
-        this.sourceUser = sourceUser;
-        this.sendDate = sendDate;
-        this.requestID = requestID;
-        this.receiverID = receiverID;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public Integer getReceiverID() {
-        return receiverID;
-    }
+    public UserDTO getSender() { return sender; }
+    public void setSender(UserDTO sender) { this.sender = sender; }
 
-    public void setReceiverID(Integer receiverID) {
-        this.receiverID = receiverID;
-    }
+    public int getReceiverId() { return receiverId; }
+    public void setReceiverId(int receiverId) { this.receiverId = receiverId; }
 
-    public userDTO getSourceUser() {
-        return sourceUser;
-    }
-
-    public void setSourceUser(userDTO sourceUser) {
-        this.sourceUser = sourceUser;
-    }
-
-    public Date getSendDate() {
-        return sendDate;
-    }
-
-    public void setSendDate(Date sendDate) {
-        this.sendDate = sendDate;
-    }
-
-    public Integer getRequestID() {
-        return requestID;
-    }
-
-    public void setRequestID(Integer requestID) {
-        this.requestID = requestID;
-    }
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date; }
 }

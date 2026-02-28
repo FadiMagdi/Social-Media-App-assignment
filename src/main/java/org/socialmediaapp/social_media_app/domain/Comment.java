@@ -2,54 +2,33 @@ package org.socialmediaapp.social_media_app.domain;
 
 import java.util.Date;
 
+/**
+ * A comment on a post.
+ */
 public class Comment {
-    public userDTO userMadeComment;
-    public String commentText;
-    public Date commentDate;
-    private Integer commentID;
 
-    public Comment(userDTO userMadeComment, String commentText, Date commentDate) {
-        this.userMadeComment = userMadeComment;
-        this.commentText = commentText;
-        this.commentDate = commentDate;
+    private int id;
+    private UserDTO author;
+    private String text;
+    private Date date;
+
+    public Comment() {}
+
+    public Comment(UserDTO author, String text, Date date) {
+        this.author = author;
+        this.text = text;
+        this.date = date;
     }
 
-    public Comment(userDTO userMadeComment, String commentText, Date commentDate, Integer commentID) {
-        this.userMadeComment = userMadeComment;
-        this.commentText = commentText;
-        this.commentDate = commentDate;
-        this.commentID = commentID;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public Integer getCommentID() {
-        return commentID;
-    }
+    public UserDTO getAuthor() { return author; }
+    public void setAuthor(UserDTO author) { this.author = author; }
 
-    public void setCommentID(Integer commentID) {
-        this.commentID = commentID;
-    }
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
 
-    public userDTO getUserMadeComment() {
-        return userMadeComment;
-    }
-
-    public void setUserMadeComment(userDTO userMadeComment) {
-        this.userMadeComment = userMadeComment;
-    }
-
-    public String getCommentText() {
-        return commentText;
-    }
-
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
-    }
-
-    public Date getCommentDate() {
-        return commentDate;
-    }
-
-    public void setCommentDate(Date commentDate) {
-        this.commentDate = commentDate;
-    }
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date; }
 }
